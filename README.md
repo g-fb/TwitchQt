@@ -10,9 +10,6 @@ A simple Header-only Qt wrapper for the new Twitch.tv api(Helix) written using Q
 - [JSON for Modern C++ (already included)](https://github.com/nlohmann/json) 
 
 ## Usage
-#### QMake
-Clone this library wherever you want and just `include(path/to/TwitchQt.pri)` in your .pro file. 
-
 #### CMake
 ```
 include(FetchContent)
