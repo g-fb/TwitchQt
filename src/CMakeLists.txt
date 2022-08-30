@@ -35,3 +35,13 @@ target_link_libraries(TwitchQt
         Qt${QT_MAJOR_VERSION}::Gui
         Qt${QT_MAJOR_VERSION}::Network
 )
+
+install(TARGETS TwitchQt
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+            COMPONENT   Runtime
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT          Runtime
+            NAMELINK_COMPONENT Development
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT   Development
+)
