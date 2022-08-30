@@ -16,7 +16,7 @@ include(FetchContent)
 ...
 FetchContent_Declare(
     TwitchQt
-    GIT_REPOSITORY "https://github.com/jkbz64/TwitchQt"
+    GIT_REPOSITORY "https://github.com/g-fb/TwitchQt"
     GIT_TAG "commit hash"
     )
 FetchContent_MakeAvailable(TwitchQt)
@@ -58,4 +58,4 @@ int main(int argc, char* argv[])
 ```
 
 ## Features
-Look at the [twitchapi.hpp](https://github.com/jkbz64/TwitchQt/blob/master/TwitchQt/twitchapi.hpp) file :)
+Look at the [twitchapi.hpp](https://github.com/g-fb/TwitchQt/blob/master/src/twitchapi.hpp) file :)
