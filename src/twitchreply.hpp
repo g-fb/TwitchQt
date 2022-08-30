@@ -83,7 +83,6 @@ protected:
     virtual void parseData(const QByteArray&) override;
 };
 
-#include "twitchreply.inl"
 }
 
 #endif // TWITCHREPLY_HPP

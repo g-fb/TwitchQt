@@ -1,4 +1,6 @@
+#include "twitchvideoreply.hpp"
 
+namespace Twitch {
 inline void VideoReply::parseData(const JSON& json)
 {
     if (json.find("data") != json.end()) {
@@ -26,7 +28,7 @@ inline void VideoReply::parseData(const JSON& json)
                 type = Video::VideoType::Upload;
             else if (typeStr == "archive")
                 type = Video::VideoType::Archive;
-            else if (typeStr == "highlight")
+            else
                 type = Video::VideoType::Highlight;
 
             QString createdAt = video["created_at"];
@@ -82,7 +84,7 @@ inline void VideosReply::parseData(const JSON& json)
                 type = Video::VideoType::Upload;
             else if (typeStr == "archive")
                 type = Video::VideoType::Archive;
-            else if (typeStr == "highlight")
+            else
                 type = Video::VideoType::Highlight;
 
             QString createdAt = video["created_at"];
@@ -123,4 +125,5 @@ inline Twitch::Video Twitch::VideoReply::video()
 inline Twitch::Videos Twitch::VideosReply::videos()
 {
     return m_data.value<Twitch::Videos>();
+}
 }

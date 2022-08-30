@@ -341,8 +341,4 @@ Q_DECLARE_METATYPE(Twitch::Emote);
 Q_DECLARE_METATYPE(Twitch::Emotes);
 Q_DECLARE_METATYPE(Twitch::EmotesMap);
 
-namespace Twitch {
-#include "twitchemote.inl"
-}
-
 #endif // TWITCHEMOTE_HPP

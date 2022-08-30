@@ -1,35 +1,34 @@
-#ifndef TWITCHSTREAMREPLY_HPP
-#define TWITCHSTREAMREPLY_HPP
+#ifndef TWITCHVIDEOREPLY_HPP
+#define TWITCHVIDEOREPLY_HPP
 
 #include "twitchreply.hpp"
-#include "twitchstream.hpp"
+#include "twitchvideo.hpp"
 
 namespace Twitch {
-class StreamReply : public JSONReply {
+class VideoReply : public JSONReply {
     Q_OBJECT
 public:
     using JSONReply::JSONReply;
 
-    Twitch::Stream stream();
+    Twitch::Video video();
 
 protected:
     virtual void parseData(const JSON&) override;
 };
 
-class StreamsReply : public JSONReply {
+class VideosReply : public JSONReply {
     Q_OBJECT
 public:
     using JSONReply::JSONReply;
     int combinedViewerCount() const;
 
-    Twitch::Streams streams();
+    Twitch::Videos videos();
 
 protected:
     int m_combinedViewerCount{ 0 };
     virtual void parseData(const JSON&) override;
 };
 
-#include "twitchstreamreply.inl"
 }
 
-#endif // TWITCHSTREAMREPLY_HPP
+#endif // TWITCHVIDEOREPLY_HPP

@@ -132,7 +132,6 @@ protected:
 
     void updateLimits(QNetworkReply*);
 };
-#include "twitchapi.inl"
 }
 
 #endif // TWITCHAPI_HPP

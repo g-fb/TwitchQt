@@ -10,23 +10,22 @@ add_library(TwitchQt::TwitchQt ALIAS TwitchQt)
 
 target_sources(TwitchQt
     INTERFACE
-        TwitchQt/json.hpp
-        TwitchQt/twitchapi.hpp
-        TwitchQt/twitchapi.inl
-        TwitchQt/twitchbadge.hpp
-        TwitchQt/twitchbadgereply.hpp
-        TwitchQt/twitchemote.hpp
-        TwitchQt/twitchemotereply.hpp
-        TwitchQt/twitchgame.hpp
-        TwitchQt/twitchgamereply.hpp
-        TwitchQt/twitchreply.hpp
-        TwitchQt/twitchstream.hpp
-        TwitchQt/twitchstreamreply.hpp
-        TwitchQt/twitchuser.hpp
-        TwitchQt/twitchuserreply.hpp
-        TwitchQt/twitchvideo.hpp
-        TwitchQt/twitchvideoreply.hpp
-        TwitchQt/json/json.hpp)
+        src/json.hpp
+        src/twitchapi.cpp src/twitchapi.hpp
+        src/twitchbadge.hpp
+        src/twitchbadgereply.cpp src/twitchbadgereply.hpp
+        src/twitchemote.cpp src/twitchemote.hpp
+        src/twitchemotereply.cpp src/twitchemotereply.hpp
+        src/twitchgame.hpp
+        src/twitchgamereply.cpp src/twitchgamereply.hpp
+        src/twitchreply.cpp src/twitchreply.hpp
+        src/twitchstream.hpp
+        src/twitchstreamreply.cpp src/twitchstreamreply.hpp
+        src/twitchuser.hpp
+        src/twitchuserreply.cpp src/twitchuserreply.hpp
+        src/twitchvideo.hpp
+        src/twitchvideoreply.cpp src/twitchvideoreply.hpp
+        src/json/json.hpp)
 
 target_include_directories(TwitchQt
     INTERFACE

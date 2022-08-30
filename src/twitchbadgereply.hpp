@@ -19,7 +19,6 @@ protected:
 // Pretty much the same algorithm for parsing the json document
 using ChannelBadgesReply = GlobalBadgesReply;
 
-#include "twitchbadgereply.inl"
 }
 
 #endif // TWITCHBADGEREPLY_HPP

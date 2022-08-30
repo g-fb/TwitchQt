@@ -86,7 +86,6 @@ protected:
     virtual void parseData(const JSON&) override;
 };
 
-#include "twitchemotereply.inl"
 }
 
 #endif // TWITCHEMOTEREPLY_HPP

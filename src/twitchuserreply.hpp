@@ -39,7 +39,6 @@ protected:
     virtual void parseData(const JSON&) override;
 };
 
-#include "twitchuserreply.inl"
 }
 
 #endif // TWITCHUSERREPLY_HPP

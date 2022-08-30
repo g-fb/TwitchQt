@@ -34,7 +34,6 @@ protected:
     virtual void parseData(const QByteArray&) override;
 };
 
-#include "twitchgamereply.inl"
 }
 
 #endif // TWITCHGAMEREPLY_HPP
