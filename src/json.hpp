@@ -1,7 +1,11 @@
+/*
+    SPDX-FileCopyrightText: 2018 Kamil Jakubus
+
+    SPDX-License-Identifier: MIT
+*/
+
 #ifndef JSON_HPP
 #define JSON_HPP
-
-#include "twitchqt_export.h"
 
 #include <QString>
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)

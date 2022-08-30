@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2018 Kamil Jakubus
+
+SPDX-License-Identifier: MIT
+-->
+
 # TwitchQt
 
 _Fork of https://github.com/jkbz64/TwitchQt_

@@ -1,3 +1,9 @@
+/*
+    SPDX-FileCopyrightText: 2018 Kamil Jakubus
+
+    SPDX-License-Identifier: MIT
+*/
+
 #ifndef TWITCHUSER_HPP
 #define TWITCHUSER_HPP
 

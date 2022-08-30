@@ -1,3 +1,9 @@
+/*
+    SPDX-FileCopyrightText: 2018 Kamil Jakubus
+
+    SPDX-License-Identifier: MIT
+*/
+
 #ifndef TWITCHGAMEREPLY_HPP
 #define TWITCHGAMEREPLY_HPP
 

@@ -1,4 +1,9 @@
-﻿---
+#
+# SPDX-FileCopyrightText: 2018 Kamil Jakubus
+#
+# SPDX-License-Identifier: MIT
+#
+---
 BasedOnStyle: WebKit
 SortIncludes: 'false'
 IndentWidth: '4'

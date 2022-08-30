@@ -1,3 +1,9 @@
+/*
+    SPDX-FileCopyrightText: 2018 Kamil Jakubus
+
+    SPDX-License-Identifier: MIT
+*/
+
 #include "twitchbadgereply.hpp"
 
 namespace Twitch {

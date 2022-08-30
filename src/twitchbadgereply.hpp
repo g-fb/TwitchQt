@@ -1,3 +1,9 @@
+/*
+    SPDX-FileCopyrightText: 2018 Kamil Jakubus
+
+    SPDX-License-Identifier: MIT
+*/
+
 #ifndef TWITCHBADGEREPLY_HPP
 #define TWITCHBADGEREPLY_HPP
 

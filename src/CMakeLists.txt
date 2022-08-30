@@ -1,3 +1,8 @@
+#
+# SPDX-FileCopyrightText: 2022 George Florea Bănuș <georgefb899@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+#
 
 add_library(TwitchQt)
 add_library(TwitchQt::TwitchQt ALIAS TwitchQt)
