@@ -1,5 +1,7 @@
+#include "twitchbadgereply.hpp"
 
-inline void GlobalBadgesReply::parseData(const JSON& json)
+namespace Twitch {
+void GlobalBadgesReply::parseData(const JSON& json)
 {
     Twitch::Badges badges;
     if (json.find("badge_sets") != json.end()) {
@@ -21,7 +23,8 @@ inline void GlobalBadgesReply::parseData(const JSON& json)
     m_data.setValue(badges);
 }
 
-inline Twitch::Badges Twitch::GlobalBadgesReply::badges()
+Twitch::Badges Twitch::GlobalBadgesReply::badges()
 {
     return m_data.value<Twitch::Badges>();
+}
 }

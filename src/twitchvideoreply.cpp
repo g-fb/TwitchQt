@@ -1,7 +1,7 @@
 #include "twitchvideoreply.hpp"
 
 namespace Twitch {
-inline void VideoReply::parseData(const JSON& json)
+void VideoReply::parseData(const JSON& json)
 {
     if (json.find("data") != json.end()) {
         const auto& data = json["data"];
@@ -57,7 +57,7 @@ inline void VideoReply::parseData(const JSON& json)
     }
 }
 
-inline void VideosReply::parseData(const JSON& json)
+void VideosReply::parseData(const JSON& json)
 {
     Videos videos;
     if (json.find("data") != json.end()) {
@@ -112,17 +112,17 @@ inline void VideosReply::parseData(const JSON& json)
     m_data.setValue(videos);
 }
 
-inline int VideosReply::combinedViewerCount() const
+int VideosReply::combinedViewerCount() const
 {
     return m_combinedViewerCount;
 }
 
-inline Twitch::Video Twitch::VideoReply::video()
+Twitch::Video Twitch::VideoReply::video()
 {
     return m_data.value<Twitch::Video>();
 }
 
-inline Twitch::Videos Twitch::VideosReply::videos()
+Twitch::Videos Twitch::VideosReply::videos()
 {
     return m_data.value<Twitch::Videos>();
 }

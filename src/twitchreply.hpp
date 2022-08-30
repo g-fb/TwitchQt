@@ -1,6 +1,8 @@
 #ifndef TWITCHREPLY_HPP
 #define TWITCHREPLY_HPP
 
+#include "twitchqt_export.h"
+
 #include "json.hpp"
 #include <QNetworkReply>
 #include <QVariant>
@@ -13,7 +15,7 @@ enum class ReplyState {
     Error
 };
 
-class Reply : public QObject {
+class TWITCHQT_EXPORT Reply : public QObject {
     Q_OBJECT
 public:
     template <class T>
@@ -42,7 +44,7 @@ protected:
     QString m_cursor;
 };
 
-class RawReply : public Reply {
+class TWITCHQT_EXPORT RawReply : public Reply {
     Q_OBJECT
 public:
     using Reply::Reply;
@@ -55,7 +57,7 @@ protected:
     virtual void parseData(const QByteArray&) = 0;
 };
 
-class JSONReply : public Reply {
+class TWITCHQT_EXPORT JSONReply : public Reply {
     Q_OBJECT
 public:
     using Reply::Reply;
@@ -74,7 +76,7 @@ private:
     JSON m_json;
 };
 
-class ImageReply : public RawReply {
+class TWITCHQT_EXPORT ImageReply : public RawReply {
     Q_OBJECT
 public:
     using RawReply::RawReply;

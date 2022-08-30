@@ -1,6 +1,8 @@
 #ifndef TWITCHGAME_HPP
 #define TWITCHGAME_HPP
 
+#include "twitchqt_export.h"
+
 #include <QString>
 #include <QVector>
 

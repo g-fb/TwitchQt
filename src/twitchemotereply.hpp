@@ -1,11 +1,13 @@
 #ifndef TWITCHEMOTEREPLY_HPP
 #define TWITCHEMOTEREPLY_HPP
 
+#include "twitchqt_export.h"
+
 #include "twitchreply.hpp"
 #include "twitchemote.hpp"
 
 namespace Twitch {
-class EmotesReply : public JSONReply {
+class TWITCHQT_EXPORT EmotesReply : public JSONReply {
     Q_OBJECT
 public:
     using JSONReply::JSONReply;
@@ -17,7 +19,7 @@ protected:
 };
 
 namespace TwitchEmotes {
-    class GlobalEmotesReply : public EmotesReply {
+    class TWITCHQT_EXPORT GlobalEmotesReply : public EmotesReply {
         Q_OBJECT
     public:
         using EmotesReply::EmotesReply;
@@ -26,7 +28,7 @@ namespace TwitchEmotes {
         virtual void parseData(const JSON&) override;
     };
 
-    class SubscriberEmotesReply : public JSONReply {
+    class TWITCHQT_EXPORT SubscriberEmotesReply : public JSONReply {
         Q_OBJECT
     public:
         using JSONReply::JSONReply;
@@ -38,7 +40,7 @@ namespace TwitchEmotes {
 }
 
 namespace BTTV {
-    class GlobalEmotesReply : public EmotesReply {
+    class TWITCHQT_EXPORT GlobalEmotesReply : public EmotesReply {
         Q_OBJECT
     public:
         using EmotesReply::EmotesReply;
@@ -47,7 +49,7 @@ namespace BTTV {
         virtual void parseData(const JSON&) override;
     };
 
-    class SubscriberEmotesReply : public EmotesReply {
+    class TWITCHQT_EXPORT SubscriberEmotesReply : public EmotesReply {
         Q_OBJECT
     public:
         using EmotesReply::EmotesReply;
@@ -58,7 +60,7 @@ namespace BTTV {
 }
 
 namespace FFZ {
-    class GlobalEmotesReply : public EmotesReply {
+    class TWITCHQT_EXPORT GlobalEmotesReply : public EmotesReply {
         Q_OBJECT
     public:
         using EmotesReply::EmotesReply;
@@ -67,7 +69,7 @@ namespace FFZ {
         virtual void parseData(const JSON&) override;
     };
 
-    class SubscriberEmotesReply : public EmotesReply {
+    class TWITCHQT_EXPORT SubscriberEmotesReply : public EmotesReply {
         Q_OBJECT
     public:
         using EmotesReply::EmotesReply;
@@ -77,7 +79,7 @@ namespace FFZ {
     };
 }
 
-class EmoteSetsReply : public EmotesReply {
+class TWITCHQT_EXPORT EmoteSetsReply : public EmotesReply {
     Q_OBJECT
 public:
     using EmotesReply::EmotesReply;

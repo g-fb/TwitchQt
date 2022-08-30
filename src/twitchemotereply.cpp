@@ -1,10 +1,12 @@
+#include "twitchemotereply.hpp"
 
-inline void TwitchEmotes::GlobalEmotesReply::parseData(const JSON& json)
+namespace Twitch {
+void TwitchEmotes::GlobalEmotesReply::parseData(const JSON& json)
 {
     m_data.setValue(Emotes::fromTwitchEmotes(json));
 }
 
-inline void TwitchEmotes::SubscriberEmotesReply::parseData(const JSON& json)
+void TwitchEmotes::SubscriberEmotesReply::parseData(const JSON& json)
 {
     Twitch::EmotesMap emotes;
     for (const auto& user : json) {
@@ -19,7 +21,7 @@ inline void TwitchEmotes::SubscriberEmotesReply::parseData(const JSON& json)
     m_data.setValue(emotes);
 }
 
-inline void BTTV::GlobalEmotesReply::parseData(const JSON& json)
+void BTTV::GlobalEmotesReply::parseData(const JSON& json)
 {
     if (json.find("status") != json.end() && json["status"].get<int>() != 200)
         return;
@@ -28,7 +30,7 @@ inline void BTTV::GlobalEmotesReply::parseData(const JSON& json)
     m_data.setValue(Emotes::fromBTTV(emotesArray));
 }
 
-inline void BTTV::SubscriberEmotesReply::parseData(const JSON& json)
+void BTTV::SubscriberEmotesReply::parseData(const JSON& json)
 {
     Twitch::Emotes emotes;
 
@@ -41,7 +43,7 @@ inline void BTTV::SubscriberEmotesReply::parseData(const JSON& json)
     m_data.setValue(Emotes::fromBTTV(emotesArray));
 }
 
-inline void FFZ::GlobalEmotesReply::parseData(const JSON& json)
+void FFZ::GlobalEmotesReply::parseData(const JSON& json)
 {
     Twitch::Emotes emotes;
 
@@ -59,7 +61,7 @@ inline void FFZ::GlobalEmotesReply::parseData(const JSON& json)
     m_data.setValue(emotes);
 }
 
-inline void FFZ::SubscriberEmotesReply::parseData(const JSON& json)
+void FFZ::SubscriberEmotesReply::parseData(const JSON& json)
 {
     if (json.find("error") != json.end()) {
         m_currentState = ReplyState::Error;
@@ -76,20 +78,21 @@ inline void FFZ::SubscriberEmotesReply::parseData(const JSON& json)
     m_data.setValue(emotes);
 }
 
-inline Twitch::Emotes EmotesReply::emotes()
+Twitch::Emotes EmotesReply::emotes()
 {
     return m_data.value<Twitch::Emotes>();
 }
 
-inline Twitch::EmotesMap TwitchEmotes::SubscriberEmotesReply::emotes()
+Twitch::EmotesMap TwitchEmotes::SubscriberEmotesReply::emotes()
 {
     return m_data.value<Twitch::EmotesMap>();
 }
 
-inline void Twitch::EmoteSetsReply::parseData(const JSON& json)
+void Twitch::EmoteSetsReply::parseData(const JSON& json)
 {
     QMap<QString, Emotes> sets;
     for (const auto& set : json["emoticon_sets"].get<JSON::object_t>())
         sets[QString::fromStdString(set.first)] = Emotes::fromTwitchEmotes(set.second);
     m_data.setValue(sets);
+}
 }

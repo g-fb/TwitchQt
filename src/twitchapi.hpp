@@ -1,6 +1,8 @@
 #ifndef TWITCHAPI_HPP
 #define TWITCHAPI_HPP
 
+#include "twitchqt_export.h"
+
 #include <QNetworkAccessManager>
 #include <QNetworkDiskCache>
 #include <QStandardPaths>
@@ -13,7 +15,7 @@
 #include "twitchbadgereply.hpp"
 
 namespace Twitch {
-class Api : public QObject {
+class TWITCHQT_EXPORT Api : public QObject {
     Q_OBJECT
 public:
     using Cursor = QString;

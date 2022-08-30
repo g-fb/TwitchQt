@@ -1,12 +1,14 @@
 #ifndef TWITCHUSERREPLY_HPP
 #define TWITCHUSERREPLY_HPP
 
+#include "twitchqt_export.h"
+
 #include "twitchreply.hpp"
 #include "twitchuser.hpp"
 #include <iostream>
 
 namespace Twitch {
-class UserReply : public JSONReply {
+class TWITCHQT_EXPORT UserReply : public JSONReply {
     Q_OBJECT
 public:
     using JSONReply::JSONReply;
@@ -17,7 +19,7 @@ protected:
     virtual void parseData(const JSON&) override;
 };
 
-class UsersReply : public JSONReply {
+class TWITCHQT_EXPORT UsersReply : public JSONReply {
     Q_OBJECT
 public:
     using JSONReply::JSONReply;
@@ -28,7 +30,7 @@ protected:
     virtual void parseData(const JSON&) override;
 };
 
-class UserFollowsReply : public JSONReply {
+class TWITCHQT_EXPORT UserFollowsReply : public JSONReply {
     Q_OBJECT
 public:
     using JSONReply::JSONReply;

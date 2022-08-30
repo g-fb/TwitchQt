@@ -1,11 +1,13 @@
 #ifndef TWITCHBADGEREPLY_HPP
 #define TWITCHBADGEREPLY_HPP
 
+#include "twitchqt_export.h"
+
 #include "twitchreply.hpp"
 #include "twitchbadge.hpp"
 
 namespace Twitch {
-class GlobalBadgesReply : public JSONReply {
+class TWITCHQT_EXPORT GlobalBadgesReply : public JSONReply {
     Q_OBJECT
 public:
     using JSONReply::JSONReply;

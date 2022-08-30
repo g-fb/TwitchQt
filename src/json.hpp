@@ -1,6 +1,8 @@
 #ifndef JSON_HPP
 #define JSON_HPP
 
+#include "twitchqt_export.h"
+
 #include <QString>
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QVector>

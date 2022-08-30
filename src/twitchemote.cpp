@@ -1,6 +1,8 @@
+#include "twitchemote.hpp"
 
+namespace Twitch {
 template <typename... Args>
-inline Emote Emote::createEmoteImpl(EmoteTag<TwitchEmotes::Emote>, Args&&... args)
+Emote Emote::createEmoteImpl(EmoteTag<TwitchEmotes::Emote>, Args&&... args)
 {
     Emote emote;
     auto emoteData = QSharedPointer<TwitchEmotes::Emote>::create(std::forward<Args>(args)...);
@@ -14,7 +16,7 @@ inline Emote Emote::createEmoteImpl(EmoteTag<TwitchEmotes::Emote>, Args&&... arg
 }
 
 template <typename... Args>
-inline Emote Emote::createEmoteImpl(EmoteTag<BTTV::Emote>, Args&&... args)
+Emote Emote::createEmoteImpl(EmoteTag<BTTV::Emote>, Args&&... args)
 {
     Emote emote;
     auto emoteData = QSharedPointer<BTTV::Emote>::create(std::forward<Args>(args)...);
@@ -28,7 +30,7 @@ inline Emote Emote::createEmoteImpl(EmoteTag<BTTV::Emote>, Args&&... args)
 }
 
 template <typename... Args>
-inline Emote Emote::createEmoteImpl(EmoteTag<FFZ::Emote>, Args&&... args)
+Emote Emote::createEmoteImpl(EmoteTag<FFZ::Emote>, Args&&... args)
 {
     Emote emote;
     auto emoteData = QSharedPointer<FFZ::Emote>::create(std::forward<Args>(args)...);
@@ -42,22 +44,22 @@ inline Emote Emote::createEmoteImpl(EmoteTag<FFZ::Emote>, Args&&... args)
 }
 
 template <class EmoteClass, typename... Args>
-inline Emote Emote::createEmote(Args&&... args)
+Emote Emote::createEmote(Args&&... args)
 {
     return createEmoteImpl(EmoteTag<EmoteClass>{}, std::forward<Args>(args)...);
 }
 
-inline Emote::Emote()
+Emote::Emote()
     : m_data(nullptr)
 {
 }
 
-inline Emote::Emote(EmoteData* data)
+Emote::Emote(EmoteData* data)
     : m_data(data)
 {
 }
 
-inline Emote::Emote(const Emote& other)
+Emote::Emote(const Emote& other)
     : m_type(other.m_type)
     , m_data(other.m_data)
     , m_id(other.m_id)
@@ -67,7 +69,7 @@ inline Emote::Emote(const Emote& other)
 {
 }
 
-inline Emote::Emote(Emote&& other)
+Emote::Emote(Emote&& other)
     : m_type(other.m_type)
     , m_data(std::move(other.m_data))
     , m_id(other.m_id)
@@ -77,7 +79,7 @@ inline Emote::Emote(Emote&& other)
 {
 }
 
-inline Emote& Emote::operator=(const Emote& other)
+Emote& Emote::operator=(const Emote& other)
 {
     if (&other == this)
         return *this;
@@ -92,7 +94,7 @@ inline Emote& Emote::operator=(const Emote& other)
     return *this;
 }
 
-inline Emote& Emote::operator=(Emote&& other)
+Emote& Emote::operator=(Emote&& other)
 {
     if (&other == this)
         return *this;
@@ -107,41 +109,41 @@ inline Emote& Emote::operator=(Emote&& other)
     return *this;
 }
 
-inline Emote::~Emote() = default;
+Emote::~Emote() = default;
 
-inline const EmoteType& Emote::emoteType() const
+const EmoteType& Emote::emoteType() const
 {
     return m_type;
 }
 
-inline const QString& Emote::id() const
+const QString& Emote::id() const
 {
     return m_id;
 }
 
-inline const QString& Emote::code() const
+const QString& Emote::code() const
 {
     return m_code;
 }
 
-inline const QString& Emote::url() const
+const QString& Emote::url() const
 {
     return m_url;
 }
 
-inline const Emote::ImageType& Emote::imageType() const
+const Emote::ImageType& Emote::imageType() const
 {
     return m_imageType;
 }
 
 template <class EmoteClass>
-inline const EmoteClass& Emote::toEmote() const
+const EmoteClass& Emote::toEmote() const
 {
     // Maybe some kind of const cast?
     return *static_cast<EmoteClass*>(m_data.data());
 }
 
-inline Twitch::Emotes Twitch::Emotes::fromTwitchEmotes(const JSON& json)
+Twitch::Emotes Twitch::Emotes::fromTwitchEmotes(const JSON& json)
 {
     Twitch::Emotes emotes;
     for (const auto& emote : json)
@@ -149,7 +151,7 @@ inline Twitch::Emotes Twitch::Emotes::fromTwitchEmotes(const JSON& json)
     return emotes;
 }
 
-inline Twitch::Emotes Twitch::Emotes::fromBTTV(const JSON& json)
+Twitch::Emotes Twitch::Emotes::fromBTTV(const JSON& json)
 {
     Twitch::Emotes emotes;
     for (const auto& emote : json)
@@ -157,10 +159,11 @@ inline Twitch::Emotes Twitch::Emotes::fromBTTV(const JSON& json)
     return emotes;
 }
 
-inline Twitch::Emotes Twitch::Emotes::fromFFZ(const JSON& json)
+Twitch::Emotes Twitch::Emotes::fromFFZ(const JSON& json)
 {
     Twitch::Emotes emotes;
     for (const auto& emote : json)
         emotes.push_back(Twitch::Emote::createEmote<FFZ::Emote>(emote));
     return emotes;
+}
 }

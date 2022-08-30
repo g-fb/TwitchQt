@@ -1,11 +1,13 @@
 #ifndef TWITCHVIDEOREPLY_HPP
 #define TWITCHVIDEOREPLY_HPP
 
+#include "twitchqt_export.h"
+
 #include "twitchreply.hpp"
 #include "twitchvideo.hpp"
 
 namespace Twitch {
-class VideoReply : public JSONReply {
+class TWITCHQT_EXPORT VideoReply : public JSONReply {
     Q_OBJECT
 public:
     using JSONReply::JSONReply;
@@ -16,7 +18,7 @@ protected:
     virtual void parseData(const JSON&) override;
 };
 
-class VideosReply : public JSONReply {
+class TWITCHQT_EXPORT VideosReply : public JSONReply {
     Q_OBJECT
 public:
     using JSONReply::JSONReply;

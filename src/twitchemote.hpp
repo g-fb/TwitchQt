@@ -1,6 +1,8 @@
 #ifndef TWITCHEMOTE_HPP
 #define TWITCHEMOTE_HPP
 
+#include "twitchqt_export.h"
+
 #include "json.hpp"
 #include <QSharedPointer>
 

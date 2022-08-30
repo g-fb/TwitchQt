@@ -1,5 +1,7 @@
+#include "twitchgamereply.hpp"
 
-inline void GameReply::parseData(const JSON& json)
+namespace Twitch {
+void GameReply::parseData(const JSON& json)
 {
     if (json.find("data") != json.end()) {
         const auto& data = json["data"];
@@ -15,7 +17,7 @@ inline void GameReply::parseData(const JSON& json)
     }
 }
 
-inline void GamesReply::parseData(const JSON& json)
+void GamesReply::parseData(const JSON& json)
 {
     Games games;
     if (json.find("data") != json.end()) {
@@ -29,12 +31,13 @@ inline void GamesReply::parseData(const JSON& json)
     m_data.setValue(games);
 }
 
-inline Twitch::Games Twitch::GamesReply::games()
+Twitch::Games Twitch::GamesReply::games()
 {
     return m_data.value<Twitch::Games>();
 }
 
-inline void BoxArtReply::parseData(const QByteArray& data)
+void BoxArtReply::parseData(const QByteArray& data)
 {
     m_data.setValue(QImage::fromData(data));
+}
 }

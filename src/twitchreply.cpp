@@ -1,6 +1,8 @@
+#include "twitchreply.hpp"
 
+namespace Twitch {
 template <class T>
-inline T* Twitch::Reply::fromData(QObject* parent, const QVariant& data)
+T* Twitch::Reply::fromData(QObject* parent, const QVariant& data)
 {
     T* reply = new T;
     reply->setParent(parent);
@@ -8,7 +10,7 @@ inline T* Twitch::Reply::fromData(QObject* parent, const QVariant& data)
     return reply;
 }
 
-inline Reply::Reply()
+Reply::Reply()
     : QObject(nullptr)
     , m_reply(nullptr)
     , m_currentState(ReplyState::Success)
@@ -16,7 +18,7 @@ inline Reply::Reply()
 {
 }
 
-inline Reply::Reply(QNetworkReply* reply)
+Reply::Reply(QNetworkReply* reply)
     : QObject(reply->manager())
     , m_reply(reply)
     , m_currentState(ReplyState::Pending)
@@ -37,52 +39,52 @@ inline Reply::Reply(QNetworkReply* reply)
     #endif
 }
 
-inline Reply::~Reply()
+Reply::~Reply()
 {
 }
 
-inline QVariant& Reply::data()
+QVariant& Reply::data()
 {
     return m_data;
 }
 
-inline const ReplyState& Reply::currentState() const
+const ReplyState& Reply::currentState() const
 {
     return m_currentState;
 }
 
-inline Reply::operator bool() const
+Reply::operator bool() const
 {
     return currentState() == ReplyState::Success;
 }
 
-inline const QString& Reply::cursor() const
+const QString& Reply::cursor() const
 {
     return m_cursor;
 }
 
-inline RawReply::RawReply(QNetworkReply* reply)
+RawReply::RawReply(QNetworkReply* reply)
     : Reply(reply)
 {
 }
 
-inline RawReply::~RawReply() = default;
+RawReply::~RawReply() = default;
 
-inline JSONReply::JSONReply(QNetworkReply* reply)
+JSONReply::JSONReply(QNetworkReply* reply)
     : Reply(reply)
 {
 }
 
-inline JSONReply::~JSONReply()
+JSONReply::~JSONReply()
 {
 }
 
-inline void ImageReply::parseData(const QByteArray& data)
+void ImageReply::parseData(const QByteArray& data)
 {
     m_data.setValue(QImage::fromData(data));
 }
 
-inline void RawReply::onFinished()
+void RawReply::onFinished()
 {
     if (m_currentState != ReplyState::Error) {
         auto data = m_reply->readAll();
@@ -99,7 +101,7 @@ inline void RawReply::onFinished()
     m_reply->deleteLater();
 }
 
-inline void JSONReply::onFinished()
+void JSONReply::onFinished()
 {
     if (m_currentState != ReplyState::Error) {
         JSON::parser_callback_t cb = [](int, JSON::parse_event_t event, JSON& parsed) {
@@ -135,11 +137,12 @@ inline void JSONReply::onFinished()
     m_reply->deleteLater();
 }
 
-inline const JSON& Twitch::JSONReply::json() const
+const JSON& Twitch::JSONReply::json() const
 {
     return m_json;
 }
 
-inline void JSONReply::parseData(const JSON&)
+void JSONReply::parseData(const JSON&)
 {
+}
 }

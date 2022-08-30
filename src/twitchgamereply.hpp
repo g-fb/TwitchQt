@@ -1,11 +1,13 @@
 #ifndef TWITCHGAMEREPLY_HPP
 #define TWITCHGAMEREPLY_HPP
 
+#include "twitchqt_export.h"
+
 #include "twitchreply.hpp"
 #include "twitchgame.hpp"
 
 namespace Twitch {
-class GameReply : public JSONReply {
+class TWITCHQT_EXPORT GameReply : public JSONReply {
     Q_OBJECT
 public:
     using JSONReply::JSONReply;
@@ -14,7 +16,7 @@ protected:
     virtual void parseData(const JSON&) override;
 };
 
-class GamesReply : public JSONReply {
+class TWITCHQT_EXPORT GamesReply : public JSONReply {
     Q_OBJECT
 public:
     using JSONReply::JSONReply;
@@ -25,7 +27,7 @@ protected:
     virtual void parseData(const JSON&) override;
 };
 
-class BoxArtReply : public RawReply {
+class TWITCHQT_EXPORT BoxArtReply : public RawReply {
     Q_OBJECT
 public:
     using RawReply::RawReply;

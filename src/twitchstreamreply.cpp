@@ -1,5 +1,7 @@
+#include "twitchstreamreply.hpp"
 
-inline void StreamReply::parseData(const JSON& json)
+namespace Twitch {
+void StreamReply::parseData(const JSON& json)
 {
     if (json.find("data") != json.end()) {
         const auto& data = json["data"];
@@ -32,7 +34,7 @@ inline void StreamReply::parseData(const JSON& json)
     }
 }
 
-inline void StreamsReply::parseData(const JSON& json)
+void StreamsReply::parseData(const JSON& json)
 {
     Streams streams;
     if (json.find("data") != json.end()) {
@@ -65,17 +67,18 @@ inline void StreamsReply::parseData(const JSON& json)
     m_data.setValue(streams);
 }
 
-inline int StreamsReply::combinedViewerCount() const
+int StreamsReply::combinedViewerCount() const
 {
     return m_combinedViewerCount;
 }
 
-inline Twitch::Stream Twitch::StreamReply::stream()
+Twitch::Stream Twitch::StreamReply::stream()
 {
     return m_data.value<Twitch::Stream>();
 }
 
-inline Twitch::Streams Twitch::StreamsReply::streams()
+Twitch::Streams Twitch::StreamsReply::streams()
 {
     return m_data.value<Twitch::Streams>();
+}
 }

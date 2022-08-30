@@ -1,5 +1,7 @@
+#include "twitchuserreply.hpp"
 
-inline void UserReply::parseData(const JSON& json)
+namespace Twitch {
+void UserReply::parseData(const JSON& json)
 {
     if (json.find("data") != json.end()) {
         const auto& data = json["data"];
@@ -36,7 +38,7 @@ inline void UserReply::parseData(const JSON& json)
     }
 }
 
-inline void UsersReply::parseData(const JSON& json)
+void UsersReply::parseData(const JSON& json)
 {
     Users users;
     if (json.find("data") != json.end()) {
@@ -73,7 +75,7 @@ inline void UsersReply::parseData(const JSON& json)
     m_data.setValue(users);
 }
 
-inline void UserFollowsReply::parseData(const JSON& json)
+void UserFollowsReply::parseData(const JSON& json)
 {
     UserFollows userFollows;
     userFollows.m_total = json["total"].get<int>();
@@ -92,17 +94,18 @@ inline void UserFollowsReply::parseData(const JSON& json)
     m_data.setValue(userFollows);
 }
 
-inline Twitch::User Twitch::UserReply::user()
+Twitch::User Twitch::UserReply::user()
 {
     return m_data.value<Twitch::User>();
 }
 
-inline Twitch::Users Twitch::UsersReply::users()
+Twitch::Users Twitch::UsersReply::users()
 {
     return m_data.value<Twitch::Users>();
 }
 
-inline Twitch::UserFollows Twitch::UserFollowsReply::userFollows()
+Twitch::UserFollows Twitch::UserFollowsReply::userFollows()
 {
     return m_data.value<Twitch::UserFollows>();
+}
 }
