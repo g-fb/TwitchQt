@@ -19,7 +19,7 @@ public:
     using JSONReply::JSONReply;
 
 protected:
-    virtual void parseData(const JSON&) override;
+    void parseData(const QJsonObject&) override;
 };
 
 class TWITCHQT_EXPORT GamesReply : public JSONReply {
@@ -30,7 +30,7 @@ public:
     Twitch::Games games();
 
 protected:
-    virtual void parseData(const JSON&) override;
+    void parseData(const QJsonObject&) override;
 };
 
 class TWITCHQT_EXPORT BoxArtReply : public RawReply {
@@ -39,7 +39,7 @@ public:
     using RawReply::RawReply;
 
 protected:
-    virtual void parseData(const QByteArray&) override;
+    void parseData(const QByteArray&) override;
 };
 
 }

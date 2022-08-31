@@ -6,66 +6,72 @@
 
 #include "twitchstreamreply.hpp"
 
+#include <QJsonArray>
+
 namespace Twitch {
-void StreamReply::parseData(const JSON& json)
+void StreamReply::parseData(const QJsonObject& json)
 {
     if (json.find("data") != json.end()) {
         const auto& data = json["data"];
-        if (!data.empty()) {
-            const auto& stream = data.front();
+        if (!data.toObject().isEmpty()) {
+            const auto& stream = data.toObject();
 
-            QString typeStr = stream["type"];
+            QString typeStr = stream["type"].toString();
             Stream::StreamType type = Stream::StreamType::No;
             if (typeStr == "live")
                 type = Stream::StreamType::Live;
             else if (typeStr == "vodcast")
                 type = Stream::StreamType::Vodcast;
-            QString startedAt = stream["started_at"];
+            QString startedAt = stream["started_at"].toString();
 
-            m_data.setValue(Stream{
-                stream.value("id", QString("-1")),
-                stream.value("user_id", QString("-1")),
-                stream.value("user_name", QString("")),
-                stream.value("game_id", QString("-1")),
-                stream.value("community_ids", QVector<QString>()),
-                type,
-                stream.value("title", QString("")),
-                stream.value("viewer_count", -1),
-                QDateTime::fromString(startedAt, Qt::ISODate),
-                stream.value("language", QString("")),
-                stream.value("thumbnail_url", QString("")) });
+            m_data.setValue(Stream {
+                                stream["id"].toString("-1"),
+                                stream["user_id"].toString("-1"),
+                                stream["user_name"].toString(),
+                                stream["game_id"].toString("-1"),
+                                stream["community_ids"].toString().split(",").toVector(),
+                                type,
+                                stream["title"].toString(),
+                                stream["viewer_count"].toInt(-1),
+                                QDateTime::fromString(startedAt, Qt::ISODate),
+                                stream["language"].toString(),
+                                stream["thumbnail_url"].toString()
+                            });
         } else {
             // ???
         }
     }
 }
 
-void StreamsReply::parseData(const JSON& json)
+void StreamsReply::parseData(const QJsonObject &json)
 {
     Streams streams;
     if (json.find("data") != json.end()) {
-        const auto& data = json["data"];
+        const auto& data = json["data"].toArray();
         for (const auto& stream : data) {
-            QString typeStr = stream["type"];
+            auto streamObject = stream.toObject();
+            QString typeStr = streamObject["type"].toString();
 
             Stream::StreamType type = Stream::StreamType::No;
             if (typeStr == "live")
                 type = Stream::StreamType::Live;
             else if (typeStr == "vodcast")
                 type = Stream::StreamType::Vodcast;
-            QString startedAt = stream["started_at"];
+            QString startedAt = streamObject["started_at"].toString();
 
-            streams.push_back({ stream.value("id", QString("-1")),
-                stream.value("user_id", QString("-1")),
-                stream.value("user_name", QString("")),
-                stream.value("game_id", QString("-1")),
-                stream.value("community_ids", QVector<QString>()),
-                type,
-                stream.value("title", QString("")),
-                stream.value("viewer_count", -1),
-                QDateTime::fromString(startedAt, Qt::ISODate),
-                stream.value("language", QString("")),
-                stream.value("thumbnail_url", QString("")) });
+            streams.push_back(Stream {
+                                  streamObject["id"].toString("-1"),
+                                  streamObject["user_id"].toString("-1"),
+                                  streamObject["user_name"].toString(),
+                                  streamObject["game_id"].toString("-1"),
+                                  streamObject["community_ids"].toString().split(",").toVector(),
+                                  type,
+                                  streamObject["title"].toString(),
+                                  streamObject["viewer_count"].toInt(-1),
+                                  QDateTime::fromString(startedAt, Qt::ISODate),
+                                  streamObject["language"].toString(),
+                                  streamObject["thumbnail_url"].toString()
+                              });
 
             m_combinedViewerCount += streams.back().m_viewerCount;
         }

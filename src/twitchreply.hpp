@@ -9,7 +9,7 @@
 
 #include "twitchqt_export.h"
 
-#include "json.hpp"
+#include <QJsonObject>
 #include <QNetworkReply>
 #include <QVariant>
 #include <QImage>
@@ -71,15 +71,15 @@ public:
     JSONReply(QNetworkReply*);
     virtual ~JSONReply() override;
 
-    const JSON& json() const;
+    const QJsonObject& json() const;
 
 protected:
     virtual void onFinished() override;
 
-    virtual void parseData(const JSON&);
+    virtual void parseData(const QJsonObject&) = 0;
 
 private:
-    JSON m_json;
+    QJsonObject m_json;
 };
 
 class TWITCHQT_EXPORT ImageReply : public RawReply {

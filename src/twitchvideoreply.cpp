@@ -6,29 +6,32 @@
 
 #include "twitchvideoreply.hpp"
 
+#include <QJsonArray>
+
 namespace Twitch {
-void VideoReply::parseData(const JSON& json)
+void VideoReply::parseData(const QJsonObject &json)
 {
     if (json.find("data") != json.end()) {
         const auto& data = json["data"];
-        if (!data.empty()) {
-            const auto& video = data.front();
+        if (!data.toObject().isEmpty()) {
+            const auto& video = data.toObject();
 
             QList<MutedSegment> mutedSegmentsList;
             if (video.find("muted_segments") != video.end()) {
-                const auto& mutedSegments = video["muted_segments"];
+                const auto& mutedSegments = video["muted_segments"].toArray();
                 for (const auto& segment : mutedSegments) {
-                    if (segment.find("duration") == segment.end()) {
+                    auto segmentObject = segment.toObject();
+                    if (segmentObject.find("duration") == segmentObject.end()) {
                         continue;
                     }
                     MutedSegment ms;
-                    ms.duration = segment.value("duration", -1);
-                    ms.offset = segment.value("offset", -1);
+                    ms.duration = segmentObject["duration"].toInt(-1);
+                    ms.offset = segmentObject["offset"].toInt(-1);
                     mutedSegmentsList.append(ms);
                 }
             }
 
-            QString typeStr = video["type"];
+            QString typeStr = video["type"].toString();
             Video::VideoType type;
             if (typeStr == "upload")
                 type = Video::VideoType::Upload;
@@ -37,54 +40,57 @@ void VideoReply::parseData(const JSON& json)
             else
                 type = Video::VideoType::Highlight;
 
-            QString createdAt = video["created_at"];
-            QString publishedAt = video["published_at"];
+            QString createdAt = video["created_at"].toString();
+            QString publishedAt = video["published_at"].toString();
 
-            m_data.setValue(Video{video.value("id", QString("-1")),
-                                  video.value("stream_id", QString("-1")),
-                                  video.value("user_id", QString("-1")),
-                                  video.value("user_login", QString("")),
-                                  video.value("user_name", QString("")),
-                                  video.value("title", QString()),
-                                  video.value("description", QString("")),
-                                  QDateTime::fromString(createdAt, Qt::ISODate),
-                                  QDateTime::fromString(publishedAt, Qt::ISODate),
-                                  video.value("url", QString("")),
-                                  video.value("thumbnail_url", QString("")),
-                                  video.value("viewable", QString("")),
-                                  video.value("view_count", -1),
-                                  video.value("language", QString("")),
-                                  type,
-                                  video.value("duration", QString("")),
-                                  mutedSegmentsList});
+            m_data.setValue(Video {
+                                video["id"].toString("-1"),
+                                video["stream_id"].toString("-1"),
+                                video["user_id"].toString("-1"),
+                                video["user_login"].toString(),
+                                video["user_name"].toString(),
+                                video["title"].toString(),
+                                video["description"].toString(),
+                                QDateTime::fromString(createdAt, Qt::ISODate),
+                                QDateTime::fromString(publishedAt, Qt::ISODate),
+                                video["url"].toString(),
+                                video["thumbnail_url"].toString(),
+                                video["viewable"].toString(),
+                                video["view_count"].toInt(-1),
+                                video["language"].toString(),
+                                type,
+                                video["duration"].toString(),
+                                mutedSegmentsList
+                            });
         } else {
             // ???
         }
     }
 }
 
-void VideosReply::parseData(const JSON& json)
+void VideosReply::parseData(const QJsonObject& json)
 {
     Videos videos;
     if (json.find("data") != json.end()) {
-        const auto& data = json["data"];
+        const auto& data = json["data"].toArray();
         for (const auto& video : data) {
-
+            auto videoObject = video.toObject();
             QList<MutedSegment> mutedSegmentsList;
-            if (video.find("muted_segments") != video.end()) {
-                const auto& mutedSegments = video["muted_segments"];
+            if (videoObject.find("muted_segments") != videoObject.end()) {
+                const auto& mutedSegments = videoObject["muted_segments"].toArray();
                 for (const auto& segment : mutedSegments) {
-                    if (segment.find("duration") == segment.end()) {
+                    auto segmentObject = segment.toObject();
+                    if (segmentObject.find("duration") == segmentObject.end()) {
                         continue;
                     }
                     MutedSegment ms;
-                    ms.duration = segment.value("duration", -1);
-                    ms.offset = segment.value("offset", -1);
+                    ms.duration = segmentObject["duration"].toInt(-1);
+                    ms.offset = segmentObject["offset"].toInt(-1);
                     mutedSegmentsList.append(ms);
                 }
             }
 
-            QString typeStr = video["type"];
+            QString typeStr = videoObject["type"].toString();
             Video::VideoType type;
             if (typeStr == "upload")
                 type = Video::VideoType::Upload;
@@ -93,26 +99,28 @@ void VideosReply::parseData(const JSON& json)
             else
                 type = Video::VideoType::Highlight;
 
-            QString createdAt = video["created_at"];
-            QString publishedAt = video["published_at"];
+            QString createdAt = videoObject["created_at"].toString();
+            QString publishedAt = videoObject["published_at"].toString();
 
-            videos.push_back({video.value("id", QString("-1")),
-                              video.value("stream_id", QString("-1")),
-                              video.value("user_id", QString("-1")),
-                              video.value("user_login", QString("")),
-                              video.value("user_name", QString("")),
-                              video.value("title", QString()),
-                              video.value("description", QString("")),
-                              QDateTime::fromString(createdAt, Qt::ISODate),
-                              QDateTime::fromString(publishedAt, Qt::ISODate),
-                              video.value("url", QString("")),
-                              video.value("thumbnail_url", QString("")),
-                              video.value("viewable", QString("")),
-                              video.value("view_count", -1),
-                              video.value("language", QString("")),
-                              type,
-                              video.value("duration", QString("")),
-                              mutedSegmentsList});
+            videos.push_back(Video {
+                                 videoObject["id"].toString("-1"),
+                                 videoObject["stream_id"].toString("-1"),
+                                 videoObject["user_id"].toString("-1"),
+                                 videoObject["user_login"].toString(),
+                                 videoObject["user_name"].toString(),
+                                 videoObject["title"].toString(),
+                                 videoObject["description"].toString(),
+                                 QDateTime::fromString(createdAt, Qt::ISODate),
+                                 QDateTime::fromString(publishedAt, Qt::ISODate),
+                                 videoObject["url"].toString(),
+                                 videoObject["thumbnail_url"].toString(),
+                                 videoObject["viewable"].toString(),
+                                 videoObject["view_count"].toInt(-1),
+                                 videoObject["language"].toString(),
+                                 type,
+                                 videoObject["duration"].toString(),
+                                 mutedSegmentsList
+                             });
         }
     }
     m_data.setValue(videos);

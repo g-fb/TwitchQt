@@ -6,21 +6,23 @@
 
 #include "twitchuserreply.hpp"
 
+#include <QJsonArray>
+
 namespace Twitch {
-void UserReply::parseData(const JSON& json)
+void UserReply::parseData(const QJsonObject& json)
 {
     if (json.find("data") != json.end()) {
-        const auto& data = json["data"];
-        if (!data.empty()) {
-            const auto& user = data.front();
-            QString broadcasterTypeStr = user.value("broadcaster_type", QString(""));
+        const auto& data = json["data"].toObject();
+        if (!data.isEmpty()) {
+            const auto& user = data;
+            QString broadcasterTypeStr = user["broadcaster_type"].toString();
             User::BroadcasterType broadcasterType = User::BroadcasterType::No;
             if (broadcasterTypeStr == "partner")
                 broadcasterType = User::BroadcasterType::Partner;
             else if (broadcasterTypeStr == "affiliate")
                 broadcasterType = User::BroadcasterType::Affiliate;
 
-            QString userTypeStr = user.value("type", QString(""));
+            QString userTypeStr = user["type"].toString();
             User::UserType userType = User::UserType::No;
             if (userTypeStr == "global_mod")
                 userType = User::UserType::GlobalMod;
@@ -29,35 +31,37 @@ void UserReply::parseData(const JSON& json)
             else if (userTypeStr == "staff")
                 userType = User::UserType::Staff;
 
-            m_data.setValue(User{
-                broadcasterType,
-                user.value("description", QString("")),
-                user.value("display_name", QString("")),
-                user.value("email", QString("")),
-                user.value("id", QString("-1")),
-                user.value("login", QString("")),
-                user.value("offline_image_url", QString("")),
-                user.value("profile_image_url", QString("")),
-                userType,
-                user.value("view_count", -1) });
+            m_data.setValue(User {
+                                broadcasterType,
+                                user["description"].toString(),
+                                user["display_name"].toString(),
+                                user["email"].toString(),
+                                user["id"].toString("-1"),
+                                user["login"].toString(),
+                                user["offline_image_url"].toString(),
+                                user["profile_image_url"].toString(),
+                                userType,
+                                user["view_count"].toInt(-1)
+                            });
         }
     }
 }
 
-void UsersReply::parseData(const JSON& json)
+void UsersReply::parseData(const QJsonObject &json)
 {
     Users users;
     if (json.find("data") != json.end()) {
-        const auto& data = json["data"];
+        const auto& data = json["data"].toArray();
         for (const auto& user : data) {
-            QString broadcasterTypeStr = user.value("broadcaster_type", QString(""));
+            auto userObject = user.toObject();
+            QString broadcasterTypeStr = userObject["broadcaster_type"].toString();
             User::BroadcasterType broadcasterType = User::BroadcasterType::No;
             if (broadcasterTypeStr == "partner")
                 broadcasterType = User::BroadcasterType::Partner;
             else if (broadcasterTypeStr == "affiliate")
                 broadcasterType = User::BroadcasterType::Affiliate;
 
-            QString userTypeStr = user.value("type", QString(""));
+            QString userTypeStr = userObject["type"].toString();
             User::UserType userType = User::UserType::No;
             if (userTypeStr == "global_mod")
                 userType = User::UserType::GlobalMod;
@@ -66,35 +70,38 @@ void UsersReply::parseData(const JSON& json)
             else if (userTypeStr == "staff")
                 userType = User::UserType::Staff;
 
-            users.push_back({ broadcasterType,
-                user.value("description", QString("")),
-                user.value("display_name", QString("")),
-                user.value("email", QString("")),
-                user.value("id", QString("-1")),
-                user.value("login", QString("")),
-                user.value("offline_image_url", QString("")),
-                user.value("profile_image_url", QString("")),
-                userType,
-                user.value("view_count", -1) });
+            users.push_back(User {
+                                broadcasterType,
+                                userObject["description"].toString(),
+                                userObject["display_name"].toString(),
+                                userObject["email"].toString(),
+                                userObject["id"].toString("-1"),
+                                userObject["login"].toString(),
+                                userObject["offline_image_url"].toString(),
+                                userObject["profile_image_url"].toString(),
+                                userType,
+                                userObject["view_count"].toInt(-1)
+                            });
         }
     }
     m_data.setValue(users);
 }
 
-void UserFollowsReply::parseData(const JSON& json)
+void UserFollowsReply::parseData(const QJsonObject &json)
 {
     UserFollows userFollows;
-    userFollows.m_total = json["total"].get<int>();
+    userFollows.m_total = json["total"].toInt();
     if (json.find("data") != json.end()) {
-        const auto& data = json["data"];
+        const auto& data = json["data"].toArray();
         for (const auto& follow : data) {
-            userFollows.m_follows.push_back({
-                follow.value("from_id", QString("")),
-                follow.value("from_name", QString("")),
-                follow.value("to_id", QString("")),
-                follow.value("to_name", QString("")),
-                follow.value("followed_at", QString("")),
-            });
+            auto followObject = follow.toObject();
+            userFollows.m_follows.push_back(Follow {
+                                                followObject["from_id"].toString(),
+                                                followObject["from_name"].toString(),
+                                                followObject["to_id"].toString(),
+                                                followObject["to_name"].toString(),
+                                                followObject["followed_at"].toString(),
+                                            });
         }
     }
     m_data.setValue(userFollows);

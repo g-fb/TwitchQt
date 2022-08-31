@@ -21,7 +21,7 @@ public:
     Twitch::Badges badges();
 
 protected:
-    virtual void parseData(const JSON&) override;
+    void parseData(const QJsonObject&) override;
 };
 
 // Pretty much the same algorithm for parsing the json document

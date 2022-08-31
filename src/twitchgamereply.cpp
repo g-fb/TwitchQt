@@ -6,33 +6,40 @@
 
 #include "twitchgamereply.hpp"
 
+#include <QJsonArray>
+
 namespace Twitch {
-void GameReply::parseData(const JSON& json)
+void GameReply::parseData(const QJsonObject &json)
 {
     if (json.find("data") != json.end()) {
         const auto& data = json["data"];
-        if (!data.empty()) {
-            const auto& game = data.front();
-            m_data.setValue(Game{
-                game.value("id", QString("-1")),
-                game.value("name", QString("ERROR")),
-                game.value("box_art_url", QString("")) });
-        } else {
-            // ??
+        if (!data.toObject().isEmpty()) {
+            const auto& game = data.toObject();
+            m_data.setValue(Game {
+                                game["id"].toString(),
+                                game["name"].toString(),
+                                game["box_art_url"].toString()
+                            });
         }
+    } else {
+        // ??
     }
 }
 
-void GamesReply::parseData(const JSON& json)
+void GamesReply::parseData(const QJsonObject &json)
 {
     Games games;
     if (json.find("data") != json.end()) {
-        const auto& data = json["data"];
+        const auto& data = json["data"].toArray();
         for (const auto& game : data) {
-            games.push_back({ game.value("id", QString("-1")),
-                game.value("name", QString("ERROR")),
-                game.value("box_art_url", QString("")) });
+            games.push_back(Game {
+                                game.toObject()["id"].toString(),
+                                game.toObject()["name"].toString(),
+                                game.toObject()["box_art_url"].toString()
+                            });
         }
+    } else {
+        // ??
     }
     m_data.setValue(games);
 }

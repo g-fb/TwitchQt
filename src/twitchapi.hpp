@@ -13,7 +13,7 @@
 #include <QNetworkDiskCache>
 #include <QStandardPaths>
 
-#include "twitchemotereply.hpp"
+//#include "twitchemotereply.hpp"
 #include "twitchgamereply.hpp"
 #include "twitchstreamreply.hpp"
 #include "twitchuserreply.hpp"
@@ -76,27 +76,27 @@ public:
     virtual UsersReply* getUserByIds(const QStringList&, const Cursor& = Cursor());
     virtual UsersReply* getUserByNames(const QStringList&, const Cursor& = Cursor());
 
-    // Emotes // These curently fallback to v5 api
-    virtual EmotesReply* getGlobalEmotes();
-    virtual EmoteSetsReply* getEmotesBySet(const QString&);
-    virtual EmoteSetsReply* getEmotesBySets(const QStringList&);
-    virtual ImageReply* getEmoteImage(const QString&, EmoteSize = EmoteSize::Original);
+//    // Emotes // These curently fallback to v5 api
+//    virtual EmotesReply* getGlobalEmotes();
+//    virtual EmoteSetsReply* getEmotesBySet(const QString&);
+//    virtual EmoteSetsReply* getEmotesBySets(const QStringList&);
+//    virtual ImageReply* getEmoteImage(const QString&, EmoteSize = EmoteSize::Original);
 
-    // Optional backends
-    // TwitchEmotes
-    virtual TwitchEmotes::GlobalEmotesReply* getTwitchEmotesGlobalEmotes();
-    virtual TwitchEmotes::SubscriberEmotesReply* getTwitchEmotesSubscriberEmotes();
-    virtual JSONReply* getTwitchEmotesEmoteSets();
+//    // Optional backends
+//    // TwitchEmotes
+//    virtual TwitchEmotes::GlobalEmotesReply* getTwitchEmotesGlobalEmotes();
+//    virtual TwitchEmotes::SubscriberEmotesReply* getTwitchEmotesSubscriberEmotes();
+//    virtual JSONReply* getTwitchEmotesEmoteSets();
 
-    // BetterTTV
-    virtual BTTV::GlobalEmotesReply* getBTTVGlobalEmotes();
-    virtual BTTV::SubscriberEmotesReply* getBTTVSubscriberEmotesByChannel(const QString&);
-    virtual ImageReply* getBTTVEmoteImage(const QString&, EmoteSize = EmoteSize::Original);
+//    // BetterTTV
+//    virtual BTTV::GlobalEmotesReply* getBTTVGlobalEmotes();
+//    virtual BTTV::SubscriberEmotesReply* getBTTVSubscriberEmotesByChannel(const QString&);
+//    virtual ImageReply* getBTTVEmoteImage(const QString&, EmoteSize = EmoteSize::Original);
 
-    // FFZ
-    virtual FFZ::GlobalEmotesReply* getFFZGlobalEmotes();
-    virtual FFZ::SubscriberEmotesReply* getFFZSubscriberEmotesByChannel(const QString&);
-    virtual ImageReply* getFFZEmoteImage(const QString&, EmoteSize = EmoteSize::Original);
+//    // FFZ
+//    virtual FFZ::GlobalEmotesReply* getFFZGlobalEmotes();
+//    virtual FFZ::SubscriberEmotesReply* getFFZSubscriberEmotesByChannel(const QString&);
+//    virtual ImageReply* getFFZEmoteImage(const QString&, EmoteSize = EmoteSize::Original);
 
     // Badges
     virtual GlobalBadgesReply* getGlobalBadges();
@@ -104,8 +104,8 @@ public:
 
     // Utility
     // Image getter by Url
-    virtual ImageReply*
-    getImage(const QString&);
+//    virtual ImageReply*
+//    getImage(const QString&);
 
     // Rate limiting
     int rateLimit() const;

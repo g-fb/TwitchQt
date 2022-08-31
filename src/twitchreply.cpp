@@ -6,6 +6,9 @@
 
 #include "twitchreply.hpp"
 
+#include <QJsonDocument>
+#include <QString>
+
 namespace Twitch {
 template <class T>
 T* Twitch::Reply::fromData(QObject* parent, const QVariant& data)
@@ -110,28 +113,20 @@ void RawReply::onFinished()
 void JSONReply::onFinished()
 {
     if (m_currentState != ReplyState::Error) {
-        JSON::parser_callback_t cb = [](int, JSON::parse_event_t event, JSON& parsed) {
-            // Skip values with null value
-            if (event == JSON::parse_event_t::value and parsed.is_null()) {
-                return false;
-            } else {
-                return true;
-            }
-        };
-
-        auto data = m_reply->readAll();
+        auto reply = m_reply->readAll();
+        m_json = QJsonDocument::fromJson(reply.data()).object();
         {
-            m_json = JSON::parse(data.constData(), cb);
-            if (m_json.empty())
+            if (m_json.isEmpty()) {
                 m_currentState = ReplyState::Error;
-            else {
+            } else {
                 m_currentState = ReplyState::Success;
                 parseData(m_json);
 
                 if (m_json.find("pagination") != m_json.end()) {
-                    if (!m_json["pagination"]["cursor"].is_null()) {
+                    auto pagination = m_json["pagination"].toObject();
+                    if (pagination.find("cursor") != pagination.end()) {
                         // Save the pagination
-                        m_cursor = QString::fromStdString(m_json["pagination"]["cursor"].get<std::string>());
+                        m_cursor = pagination["cursor"].toString();
                     }
                 }
             }
@@ -143,12 +138,8 @@ void JSONReply::onFinished()
     m_reply->deleteLater();
 }
 
-const JSON& Twitch::JSONReply::json() const
+const QJsonObject &Twitch::JSONReply::json() const
 {
     return m_json;
-}
-
-void JSONReply::parseData(const JSON&)
-{
 }
 }

@@ -9,11 +9,10 @@ add_library(TwitchQt::TwitchQt ALIAS TwitchQt)
 
 target_sources(TwitchQt
     PRIVATE
-        json.hpp
         twitchapi.cpp
         twitchbadgereply.cpp
-        twitchemote.cpp
-        twitchemotereply.cpp
+#        twitchemote.cpp
+#        twitchemotereply.cpp
         twitchgame.hpp
         twitchgamereply.cpp
         twitchreply.cpp

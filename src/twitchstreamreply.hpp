@@ -21,7 +21,7 @@ public:
     Twitch::Stream stream();
 
 protected:
-    virtual void parseData(const JSON&) override;
+    void parseData(const QJsonObject&) override;
 };
 
 class TWITCHQT_EXPORT StreamsReply : public JSONReply {
@@ -34,7 +34,7 @@ public:
 
 protected:
     int m_combinedViewerCount{ 0 };
-    virtual void parseData(const JSON&) override;
+    void parseData(const QJsonObject&) override;
 };
 
 }

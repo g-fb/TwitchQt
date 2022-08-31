@@ -22,7 +22,7 @@ public:
     Twitch::User user();
 
 protected:
-    virtual void parseData(const JSON&) override;
+    virtual void parseData(const QJsonObject&) override;
 };
 
 class TWITCHQT_EXPORT UsersReply : public JSONReply {
@@ -33,7 +33,7 @@ public:
     Twitch::Users users();
 
 protected:
-    virtual void parseData(const JSON&) override;
+    void parseData(const QJsonObject&) override;
 };
 
 class TWITCHQT_EXPORT UserFollowsReply : public JSONReply {
@@ -44,7 +44,7 @@ public:
     Twitch::UserFollows userFollows();
 
 protected:
-    virtual void parseData(const JSON&) override;
+    void parseData(const QJsonObject&) override;
 };
 
 }
