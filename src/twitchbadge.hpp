@@ -13,12 +13,13 @@
 namespace Twitch {
 struct Badge {
     struct Version {
+        QString m_id;
         QString m_imageUrl;
         QString m_description;
         QString m_title;
     };
-    QString m_name;
-    QMap<QString, Version> m_versions;
+    QString m_setId;
+    QVector<Version> m_versions;
 };
 using Badges = QVector<Badge>;
 }

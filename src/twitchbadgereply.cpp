@@ -13,22 +13,21 @@ namespace Twitch {
 void GlobalBadgesReply::parseData(const QJsonObject &json)
 {
     Twitch::Badges badges;
-    if (json.find("badge_sets") != json.end()) {
-        const auto& badgeSets = json["badge_sets"].toArray();
-        for (const auto& badge : badgeSets) {
-            QMap<QString, Badge::Version> versions;
+    if (json.find("data") != json.end()) {
+        const auto& data = json["data"].toArray();
+        for (const auto& badge : data) {
+            QVector<Badge::Version> versions;
             const auto& badgeVersions = badge.toObject()["versions"].toArray();
             for (const auto& versionObject : badgeVersions) {
                 const auto& version = versionObject.toObject();
-                versions[version.begin().key()] = Badge::Version {
+                versions.append(Badge::Version {
+                        version["id"].toString(),
                         version["image_url_1x"].toString(),
-                        version["description"].toString(),
-                        version["title"].toString(),
-                };
+                        version["image_url_2x"].toString(),
+                        version["image_url_4x"].toString(),
+                });
             }
-            badges.push_back(Twitch::Badge {
-                badge.toObject().begin().key(),
-                versions });
+            badges.push_back(Twitch::Badge { badge["set_id"].toString(), versions });
         }
     }
     m_data.setValue(badges);

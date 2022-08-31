@@ -391,15 +391,15 @@ EmotesReply *Api::getEmoteSets(const QStringList& ids)
 
 Twitch::GlobalBadgesReply* Twitch::Api::getGlobalBadges()
 {
-    const QUrl url = QString("https://badges.twitch.tv/v1/badges/global/display");
-    auto request = buildRequest(url, false);
-    return createReply<GlobalBadgesReply>(request, false);
+    const QUrl url = api() + QString("/chat/badges/global");
+    auto request = buildRequest(QUrl(url));
+    return createReply<GlobalBadgesReply>(request);
 }
 
 Twitch::ChannelBadgesReply* Twitch::Api::getChannelBadges(const QString& id)
 {
-    const QUrl url = QString("https://badges.twitch.tv/v1/badges/channels/") + id + QString("/display");
-    auto request = buildRequest(url, false);
-    return createReply<ChannelBadgesReply>(request, false);
+    const QUrl url = api() + QString("/chat/badges") + QString("?broadcaster_id=") + id;
+    auto request = buildRequest(QUrl(url));
+    return createReply<GlobalBadgesReply>(request);
 }
 }
