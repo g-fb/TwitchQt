@@ -1,5 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2018 Kamil Jakubus
+    SPDX-FileCopyrightText: 2022 George Florea Bănuș <georgefb899@gmail.com>
 
     SPDX-License-Identifier: MIT
 */
