@@ -11,8 +11,7 @@ target_sources(TwitchQt
     PRIVATE
         twitchapi.cpp
         twitchbadgereply.cpp
-#        twitchemote.cpp
-#        twitchemotereply.cpp
+        twitchemotereply.cpp
         twitchgame.hpp
         twitchgamereply.cpp
         twitchreply.cpp

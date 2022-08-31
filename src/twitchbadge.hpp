@@ -7,8 +7,6 @@
 #ifndef TWITCHBADGE_HPP
 #define TWITCHBADGE_HPP
 
-#include "twitchqt_export.h"
-
 #include <QString>
 #include <QMap>
 

@@ -7,8 +7,6 @@
 #ifndef TWITCHVIDEO_HPP
 #define TWITCHVIDEO_HPP
 
-#include "twitchqt_export.h"
-
 #include <QDateTime>
 #include <QString>
 #include <QVector>

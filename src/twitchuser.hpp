@@ -7,8 +7,6 @@
 #ifndef TWITCHUSER_HPP
 #define TWITCHUSER_HPP
 
-#include "twitchqt_export.h"
-
 #include <QString>
 
 namespace Twitch {

@@ -21,79 +21,8 @@ public:
     Twitch::Emotes emotes();
 
 protected:
-    virtual void parseData(const JSON&) override = 0;
+    virtual void parseData(const QJsonObject&) override;
 };
-
-namespace TwitchEmotes {
-    class TWITCHQT_EXPORT GlobalEmotesReply : public EmotesReply {
-        Q_OBJECT
-    public:
-        using EmotesReply::EmotesReply;
-
-    protected:
-        virtual void parseData(const JSON&) override;
-    };
-
-    class TWITCHQT_EXPORT SubscriberEmotesReply : public JSONReply {
-        Q_OBJECT
-    public:
-        using JSONReply::JSONReply;
-        Twitch::EmotesMap emotes();
-
-    protected:
-        virtual void parseData(const JSON&) override;
-    };
-}
-
-namespace BTTV {
-    class TWITCHQT_EXPORT GlobalEmotesReply : public EmotesReply {
-        Q_OBJECT
-    public:
-        using EmotesReply::EmotesReply;
-
-    protected:
-        virtual void parseData(const JSON&) override;
-    };
-
-    class TWITCHQT_EXPORT SubscriberEmotesReply : public EmotesReply {
-        Q_OBJECT
-    public:
-        using EmotesReply::EmotesReply;
-
-    protected:
-        virtual void parseData(const JSON&) override;
-    };
-}
-
-namespace FFZ {
-    class TWITCHQT_EXPORT GlobalEmotesReply : public EmotesReply {
-        Q_OBJECT
-    public:
-        using EmotesReply::EmotesReply;
-
-    protected:
-        virtual void parseData(const JSON&) override;
-    };
-
-    class TWITCHQT_EXPORT SubscriberEmotesReply : public EmotesReply {
-        Q_OBJECT
-    public:
-        using EmotesReply::EmotesReply;
-
-    protected:
-        virtual void parseData(const JSON&) override;
-    };
-}
-
-class TWITCHQT_EXPORT EmoteSetsReply : public EmotesReply {
-    Q_OBJECT
-public:
-    using EmotesReply::EmotesReply;
-
-protected:
-    virtual void parseData(const JSON&) override;
-};
-
 }
 
 #endif // TWITCHEMOTEREPLY_HPP

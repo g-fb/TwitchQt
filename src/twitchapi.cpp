@@ -366,105 +366,28 @@ UsersReply* Api::getUserByNames(const QStringList& names, const QString& after)
     return createReply<UsersReply>(request);
 }
 
-//// Emotes
-//TwitchEmotes::GlobalEmotesReply* Api::getTwitchEmotesGlobalEmotes()
-//{
-//    const QUrl url = emotesApi() + QString("/global.json");
-//    auto request = buildRequest(QUrl(url), false);
-//    return createReply<TwitchEmotes::GlobalEmotesReply>(request, false);
-//}
+// Emotes
+EmotesReply* Api::getGlobalEmotes()
+{
+    const QUrl url = api() + QString("/chat/emotes/global");
+    auto request = buildRequest(QUrl(url));
+    return createReply<EmotesReply>(request);
+}
 
-//BTTV::GlobalEmotesReply* Api::getBTTVGlobalEmotes()
-//{
-//    const QUrl url = bttvApi() + QString("/emotes");
-//    auto request = buildRequest(QUrl(url), false);
-//    return createReply<BTTV::GlobalEmotesReply>(request, false);
-//}
+EmotesReply *Api::getChannelEmotes(const QString& id)
+{
+    const QUrl url = api() + QString("/chat/emotes") + QString("?broadcaster_id=") + id;
+    auto request = buildRequest(QUrl(url));
+    return createReply<EmotesReply>(request);
+}
 
-//FFZ::GlobalEmotesReply* Api::getFFZGlobalEmotes()
-//{
-//    const QUrl url = ffzApi() + QString("/set/global");
-//    auto request = buildRequest(QUrl(url), false);
-//    return createReply<FFZ::GlobalEmotesReply>(request, false);
-//}
-
-//ImageReply* Api::getImage(const QString& url)
-//{
-//    auto request = buildRequest(QUrl(url), false);
-//    return createReply<ImageReply>(request, false);
-//}
-
-//ImageReply* Api::getEmoteImage(const QString& id, EmoteSize size)
-//{
-//    const QUrl url = TwitchEmotes::Emote::urlTemplate().replace("{{id}}", id).replace("{{size}}", QString::number(static_cast<int>(size)));
-//    auto request = buildRequest(QUrl(url), false);
-//    return createReply<ImageReply>(request, false);
-//}
-
-//ImageReply* Api::getBTTVEmoteImage(const QString& id, EmoteSize size)
-//{
-//    const QUrl url = BTTV::Emote::urlTemplate().replace("{{id}}", id).replace("{{size}}", QString::number(static_cast<int>(size)));
-//    auto request = buildRequest(QUrl(url), false);
-//    return createReply<ImageReply>(request, false);
-//}
-
-//ImageReply* Api::getFFZEmoteImage(const QString& id, EmoteSize size)
-//{
-//    const QUrl url = FFZ::Emote::urlTemplate().replace("{{id}}", id).replace("{{size}}", QString::number(static_cast<int>(size)));
-//    auto request = buildRequest(QUrl(url), false);
-//    return createReply<ImageReply>(request, false);
-//}
-
-//TwitchEmotes::SubscriberEmotesReply* Api::getTwitchEmotesSubscriberEmotes()
-//{
-//    const QUrl url = emotesApi() + QString("/subscriber.json");
-//    auto request = buildRequest(QUrl(url), false);
-//    return createReply<TwitchEmotes::SubscriberEmotesReply>(request, false);
-//}
-
-//BTTV::SubscriberEmotesReply* Api::getBTTVSubscriberEmotesByChannel(const QString& channel)
-//{
-//    const QUrl url = bttvApi() + "/channels/" + channel;
-//    auto request = buildRequest(QUrl(url), false);
-//    return createReply<BTTV::SubscriberEmotesReply>(request, false);
-//}
-
-//FFZ::SubscriberEmotesReply* Api::getFFZSubscriberEmotesByChannel(const QString& channel)
-//{
-//    const QUrl url = ffzApi() + "/room/" + channel;
-//    auto request = buildRequest(QUrl(url), false);
-//    return createReply<FFZ::SubscriberEmotesReply>(request, false);
-//}
-
-//JSONReply* Twitch::Api::getTwitchEmotesEmoteSets()
-//{
-//    const QUrl url = emotesApi() + QString("/sets.json");
-//    auto request = buildRequest(QUrl(url), false);
-//    return createReply<JSONReply>(request, false);
-//}
-
-//EmotesReply* Api::getGlobalEmotes()
-//{
-//    // Fallback to twitch emotes
-//    return getTwitchEmotesGlobalEmotes();
-//}
-
-//EmoteSetsReply* Api::getEmotesBySet(const QString& set)
-//{
-//    // Fallback to v5
-//    const QUrl url = QString("https://api.twitch.tv/kraken/chat/emoticon_images?emotesets=" + set);
-//    auto request = buildRequest(QUrl(url));
-//    request.setRawHeader("Accept", "application/vnd.twitchtv.v5+json");
-//    return createReply<EmoteSetsReply>(request, false);
-//}
-
-//EmoteSetsReply* Api::getEmotesBySets(const QStringList& sets)
-//{
-//    const QUrl url = QString("https://api.twitch.tv/kraken/chat/emoticon_images?emotesets=") + sets.join(",");
-//    auto request = buildRequest(QUrl(url));
-//    request.setRawHeader("Accept", "application/vnd.twitchtv.v5+json");
-//    return createReply<EmoteSetsReply>(request, false);
-//}
+EmotesReply *Api::getEmoteSets(const QStringList& ids)
+{
+    const QUrl url = api() + QString("/chat/emotes/set")
+            + QString("?emote_set_id=") + ids.join(repeatDelimeter("emote_set_id"));
+    auto request = buildRequest(QUrl(url));
+    return createReply<EmotesReply>(request);
+}
 
 Twitch::GlobalBadgesReply* Twitch::Api::getGlobalBadges()
 {
