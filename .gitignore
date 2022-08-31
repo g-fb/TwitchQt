@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: MIT
 #
 
+/.clang-format
 # C++ objects and libs
 
 *.slo
