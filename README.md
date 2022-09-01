@@ -8,7 +8,7 @@ SPDX-License-Identifier: MIT
 
 _Fork of https://github.com/jkbz64/TwitchQt_
 
-A simple Header-only Qt wrapper for the new Twitch.tv api(Helix) written using Qt5. It also supports TwitchEmotes, BTTV and FFZ.
+A simple Qt library for the new Twitch.tv api (Helix) written using Qt5.
 
 ## Requirements
 #### Qt5
