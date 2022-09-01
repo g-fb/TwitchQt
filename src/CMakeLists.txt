@@ -9,7 +9,7 @@ add_library(TwitchQt::TwitchQt ALIAS TwitchQt)
 
 target_sources(TwitchQt
     PRIVATE
-        twitchapi.cpp
+        twitchqt.cpp
         twitchbadgereply.cpp
         twitchemotereply.cpp
         twitchgame.hpp
@@ -37,8 +37,7 @@ target_link_libraries(TwitchQt
 ecm_generate_headers(TwitchQt_HEADERS
     HEADER_EXTENSION hpp
     HEADER_NAMES
-        TwitchApi
-
+        TwitchQt
     REQUIRED_HEADERS TwitchQt_HEADERS
 )
 

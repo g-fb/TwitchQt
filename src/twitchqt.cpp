@@ -4,7 +4,7 @@
     SPDX-License-Identifier: MIT
 */
 
-#include "twitchapi.hpp"
+#include "twitchqt.hpp"
 
 namespace Twitch
 {
