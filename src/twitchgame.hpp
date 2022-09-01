@@ -7,11 +7,11 @@
 #ifndef TWITCHGAME_HPP
 #define TWITCHGAME_HPP
 
+#include <QObject>
 #include <QString>
 #include <QVector>
 
 namespace Twitch {
-// Models
 struct Game {
     QString m_id;
     QString m_name;

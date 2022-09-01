@@ -8,8 +8,9 @@
 #ifndef TWITCHEMOTE_HPP
 #define TWITCHEMOTE_HPP
 
-#include <QSharedPointer>
+#include <QObject>
 #include <QMap>
+#include <QSharedPointer>
 
 namespace Twitch {
 struct Emote {

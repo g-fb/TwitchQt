@@ -8,6 +8,7 @@
 #define TWITCHSTREAM_HPP
 
 #include <QDateTime>
+#include <QObject>
 #include <QString>
 #include <QVector>
 

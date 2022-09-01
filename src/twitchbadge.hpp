@@ -7,8 +7,8 @@
 #ifndef TWITCHBADGE_HPP
 #define TWITCHBADGE_HPP
 
+#include <QObject>
 #include <QString>
-#include <QMap>
 
 namespace Twitch {
 struct Badge {
