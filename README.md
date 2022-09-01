@@ -33,7 +33,7 @@ Or clone the repo in your project and add `add_subdirectory(path/to/TwitchQt)` i
 ## Example
 ```cpp
 #include <QCoreApplication>
-#include <TwitchQt/Twitch>
+#include <TwitchQt>
 
 int main(int argc, char* argv[])
 {
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
     api.setBearerToken("BEARER-TOKEN HERE");
 
     // Note: For this endpoint stream has to be online to return the data! 
-    auto reply = api.getStreamByName("forsen");
+    auto reply = api.getStreamByName("gorgc");
     a.connect(reply, &Twitch::Reply::finished, [&a, reply]() {
         if (reply->currentState() == Twitch::ReplyState::Success) {
             // Convert reply data to Stream struct
@@ -57,9 +57,7 @@ int main(int argc, char* argv[])
         a.quit();
     });
 
-    a.exec();
-
-    return 0;
+    return a.exec();
 }
 
 ```
