@@ -8,18 +8,19 @@
 #ifndef TWITCHEMOTE_HPP
 #define TWITCHEMOTE_HPP
 
-#include <QObject>
 #include <QMap>
+#include <QObject>
 #include <QSharedPointer>
 
-namespace Twitch {
+namespace Twitch
+{
 struct Emote {
     QString m_id;
     QString m_name;
-    QMap<QString, QVariant> m_images {};
-    QList<QVariant> m_format {};
-    QList<QVariant> m_scale {};
-    QList<QVariant> m_themeMode {};
+    QMap<QString, QVariant> m_images{};
+    QList<QVariant> m_format{};
+    QList<QVariant> m_scale{};
+    QList<QVariant> m_themeMode{};
     QString m_template;
 };
 

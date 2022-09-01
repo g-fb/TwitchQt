@@ -9,12 +9,12 @@
 
 #include <QJsonArray>
 
-Twitch::Video videoFromJson(const QJsonObject& video)
+Twitch::Video videoFromJson(const QJsonObject &video)
 {
     QList<Twitch::MutedSegment> mutedSegmentsList;
     if (video.find("muted_segments") != video.end()) {
-        const auto& mutedSegments = video["muted_segments"].toArray();
-        for (const auto& segment : mutedSegments) {
+        const auto &mutedSegments = video["muted_segments"].toArray();
+        for (const auto &segment : mutedSegments) {
             auto segmentObject = segment.toObject();
             if (segmentObject.find("duration") == segmentObject.end()) {
                 continue;
@@ -39,32 +39,31 @@ Twitch::Video videoFromJson(const QJsonObject& video)
     QString createdAt = video["created_at"].toString();
     QString publishedAt = video["published_at"].toString();
 
-    return Twitch::Video {
-        video["id"].toString("-1"),
-        video["stream_id"].toString("-1"),
-        video["user_id"].toString("-1"),
-        video["user_login"].toString(),
-        video["user_name"].toString(),
-        video["title"].toString(),
-        video["description"].toString(),
-        QDateTime::fromString(createdAt, Qt::ISODate),
-        QDateTime::fromString(publishedAt, Qt::ISODate),
-        video["url"].toString(),
-        video["thumbnail_url"].toString(),
-        video["viewable"].toString(),
-        video["view_count"].toInt(-1),
-        video["language"].toString(),
-        type,
-        video["duration"].toString(),
-        mutedSegmentsList
-    };
+    return Twitch::Video{video["id"].toString("-1"),
+                         video["stream_id"].toString("-1"),
+                         video["user_id"].toString("-1"),
+                         video["user_login"].toString(),
+                         video["user_name"].toString(),
+                         video["title"].toString(),
+                         video["description"].toString(),
+                         QDateTime::fromString(createdAt, Qt::ISODate),
+                         QDateTime::fromString(publishedAt, Qt::ISODate),
+                         video["url"].toString(),
+                         video["thumbnail_url"].toString(),
+                         video["viewable"].toString(),
+                         video["view_count"].toInt(-1),
+                         video["language"].toString(),
+                         type,
+                         video["duration"].toString(),
+                         mutedSegmentsList};
 }
 
-namespace Twitch {
+namespace Twitch
+{
 void VideoReply::parseData(const QJsonObject &json)
 {
     if (json.find("data") != json.end()) {
-        const auto& data = json["data"].toObject();
+        const auto &data = json["data"].toObject();
         if (!data.isEmpty()) {
             m_data.setValue(videoFromJson(data));
         } else {
@@ -73,12 +72,12 @@ void VideoReply::parseData(const QJsonObject &json)
     }
 }
 
-void VideosReply::parseData(const QJsonObject& json)
+void VideosReply::parseData(const QJsonObject &json)
 {
     Videos videos;
     if (json.find("data") != json.end()) {
-        const auto& data = json["data"].toArray();
-        for (const auto& video : data) {
+        const auto &data = json["data"].toArray();
+        for (const auto &video : data) {
             videos.push_back(videoFromJson(video.toObject()));
         }
     }

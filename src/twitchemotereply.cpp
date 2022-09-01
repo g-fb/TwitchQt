@@ -9,7 +9,8 @@
 
 #include <QJsonArray>
 
-namespace Twitch {
+namespace Twitch
+{
 Twitch::Emotes EmotesReply::emotes()
 {
     return m_data.value<Twitch::Emotes>();
@@ -19,8 +20,8 @@ void EmotesReply::parseData(const QJsonObject &json)
 {
     Twitch::Emotes emotes;
     if (json.find("data") != json.end()) {
-        const auto& data = json["data"].toArray();
-        for (const auto& emote : data) {
+        const auto &data = json["data"].toArray();
+        for (const auto &emote : data) {
             auto emoteObject = emote.toObject();
             Emote e;
             e.m_id = emoteObject["id"].toString();

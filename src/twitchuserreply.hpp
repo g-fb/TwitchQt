@@ -13,8 +13,10 @@
 #include "twitchuser.hpp"
 #include <iostream>
 
-namespace Twitch {
-class TWITCHQT_EXPORT UserReply : public JSONReply {
+namespace Twitch
+{
+class TWITCHQT_EXPORT UserReply : public JSONReply
+{
     Q_OBJECT
 public:
     using JSONReply::JSONReply;
@@ -22,10 +24,11 @@ public:
     Twitch::User user();
 
 protected:
-    virtual void parseData(const QJsonObject&) override;
+    virtual void parseData(const QJsonObject &) override;
 };
 
-class TWITCHQT_EXPORT UsersReply : public JSONReply {
+class TWITCHQT_EXPORT UsersReply : public JSONReply
+{
     Q_OBJECT
 public:
     using JSONReply::JSONReply;
@@ -33,10 +36,11 @@ public:
     Twitch::Users users();
 
 protected:
-    void parseData(const QJsonObject&) override;
+    void parseData(const QJsonObject &) override;
 };
 
-class TWITCHQT_EXPORT UserFollowsReply : public JSONReply {
+class TWITCHQT_EXPORT UserFollowsReply : public JSONReply
+{
     Q_OBJECT
 public:
     using JSONReply::JSONReply;
@@ -44,7 +48,7 @@ public:
     Twitch::UserFollows userFollows();
 
 protected:
-    void parseData(const QJsonObject&) override;
+    void parseData(const QJsonObject &) override;
 };
 
 }

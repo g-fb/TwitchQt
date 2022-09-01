@@ -10,11 +10,13 @@
 
 #include "twitchqt_export.h"
 
-#include "twitchreply.hpp"
 #include "twitchemote.hpp"
+#include "twitchreply.hpp"
 
-namespace Twitch {
-class TWITCHQT_EXPORT EmotesReply : public JSONReply {
+namespace Twitch
+{
+class TWITCHQT_EXPORT EmotesReply : public JSONReply
+{
     Q_OBJECT
 public:
     using JSONReply::JSONReply;
@@ -22,7 +24,7 @@ public:
     Twitch::Emotes emotes();
 
 protected:
-    virtual void parseData(const QJsonObject&) override;
+    virtual void parseData(const QJsonObject &) override;
 };
 }
 

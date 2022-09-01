@@ -10,7 +10,8 @@
 #include <QObject>
 #include <QString>
 
-namespace Twitch {
+namespace Twitch
+{
 struct Badge {
     struct Version {
         QString m_id;

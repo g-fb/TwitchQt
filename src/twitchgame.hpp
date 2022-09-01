@@ -11,7 +11,8 @@
 #include <QString>
 #include <QVector>
 
-namespace Twitch {
+namespace Twitch
+{
 struct Game {
     QString m_id;
     QString m_name;

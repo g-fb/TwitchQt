@@ -9,20 +9,23 @@
 
 #include "twitchqt_export.h"
 
-#include "twitchreply.hpp"
 #include "twitchgame.hpp"
+#include "twitchreply.hpp"
 
-namespace Twitch {
-class TWITCHQT_EXPORT GameReply : public JSONReply {
+namespace Twitch
+{
+class TWITCHQT_EXPORT GameReply : public JSONReply
+{
     Q_OBJECT
 public:
     using JSONReply::JSONReply;
 
 protected:
-    void parseData(const QJsonObject&) override;
+    void parseData(const QJsonObject &) override;
 };
 
-class TWITCHQT_EXPORT GamesReply : public JSONReply {
+class TWITCHQT_EXPORT GamesReply : public JSONReply
+{
     Q_OBJECT
 public:
     using JSONReply::JSONReply;
@@ -30,16 +33,17 @@ public:
     Twitch::Games games();
 
 protected:
-    void parseData(const QJsonObject&) override;
+    void parseData(const QJsonObject &) override;
 };
 
-class TWITCHQT_EXPORT BoxArtReply : public RawReply {
+class TWITCHQT_EXPORT BoxArtReply : public RawReply
+{
     Q_OBJECT
 public:
     using RawReply::RawReply;
 
 protected:
-    void parseData(const QByteArray&) override;
+    void parseData(const QByteArray &) override;
 };
 
 }

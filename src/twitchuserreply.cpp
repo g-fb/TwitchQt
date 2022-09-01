@@ -9,7 +9,7 @@
 
 #include <QJsonArray>
 
-Twitch::User userFromJson(const QJsonObject& user)
+Twitch::User userFromJson(const QJsonObject &user)
 {
     QString broadcasterTypeStr = user["broadcaster_type"].toString();
     Twitch::User::BroadcasterType broadcasterType = Twitch::User::BroadcasterType::No;
@@ -29,25 +29,24 @@ Twitch::User userFromJson(const QJsonObject& user)
         userType = Twitch::User::UserType::Staff;
     }
 
-    return Twitch::User {
-        broadcasterType,
-        user["description"].toString(),
-        user["display_name"].toString(),
-        user["email"].toString(),
-        user["id"].toString("-1"),
-        user["login"].toString(),
-        user["offline_image_url"].toString(),
-        user["profile_image_url"].toString(),
-        userType,
-        user["view_count"].toInt(-1)
-    };
+    return Twitch::User{broadcasterType,
+                        user["description"].toString(),
+                        user["display_name"].toString(),
+                        user["email"].toString(),
+                        user["id"].toString("-1"),
+                        user["login"].toString(),
+                        user["offline_image_url"].toString(),
+                        user["profile_image_url"].toString(),
+                        userType,
+                        user["view_count"].toInt(-1)};
 }
 
-namespace Twitch {
-void UserReply::parseData(const QJsonObject& json)
+namespace Twitch
+{
+void UserReply::parseData(const QJsonObject &json)
 {
     if (json.find("data") != json.end()) {
-        const auto& data = json["data"].toObject();
+        const auto &data = json["data"].toObject();
         if (!data.isEmpty()) {
             m_data.setValue(userFromJson(data));
         }
@@ -58,8 +57,8 @@ void UsersReply::parseData(const QJsonObject &json)
 {
     Users users;
     if (json.find("data") != json.end()) {
-        const auto& data = json["data"].toArray();
-        for (const auto& user : data) {
+        const auto &data = json["data"].toArray();
+        for (const auto &user : data) {
             users.push_back(userFromJson(user.toObject()));
         }
     }
@@ -71,16 +70,16 @@ void UserFollowsReply::parseData(const QJsonObject &json)
     UserFollows userFollows;
     userFollows.m_total = json["total"].toInt();
     if (json.find("data") != json.end()) {
-        const auto& data = json["data"].toArray();
-        for (const auto& follow : data) {
+        const auto &data = json["data"].toArray();
+        for (const auto &follow : data) {
             auto followObject = follow.toObject();
-            userFollows.m_follows.push_back(Follow {
-                                                followObject["from_id"].toString(),
-                                                followObject["from_name"].toString(),
-                                                followObject["to_id"].toString(),
-                                                followObject["to_name"].toString(),
-                                                followObject["followed_at"].toString(),
-                                            });
+            userFollows.m_follows.push_back(Follow{
+                followObject["from_id"].toString(),
+                followObject["from_name"].toString(),
+                followObject["to_id"].toString(),
+                followObject["to_name"].toString(),
+                followObject["followed_at"].toString(),
+            });
         }
     }
     m_data.setValue(userFollows);

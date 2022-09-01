@@ -12,7 +12,8 @@
 #include <QString>
 #include <QVector>
 
-namespace Twitch {
+namespace Twitch
+{
 /// Models
 
 struct MutedSegment {
@@ -21,11 +22,7 @@ struct MutedSegment {
 };
 
 struct Video {
-    enum class VideoType {
-        Upload,
-        Archive,
-        Highlight
-    };
+    enum class VideoType { Upload, Archive, Highlight };
     QString m_id;
     QString m_streamId;
     QString m_userId;

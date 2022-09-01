@@ -12,8 +12,10 @@
 #include "twitchreply.hpp"
 #include "twitchstream.hpp"
 
-namespace Twitch {
-class TWITCHQT_EXPORT StreamReply : public JSONReply {
+namespace Twitch
+{
+class TWITCHQT_EXPORT StreamReply : public JSONReply
+{
     Q_OBJECT
 public:
     using JSONReply::JSONReply;
@@ -21,10 +23,11 @@ public:
     Twitch::Stream stream();
 
 protected:
-    void parseData(const QJsonObject&) override;
+    void parseData(const QJsonObject &) override;
 };
 
-class TWITCHQT_EXPORT StreamsReply : public JSONReply {
+class TWITCHQT_EXPORT StreamsReply : public JSONReply
+{
     Q_OBJECT
 public:
     using JSONReply::JSONReply;
@@ -33,8 +36,8 @@ public:
     Twitch::Streams streams();
 
 protected:
-    int m_combinedViewerCount{ 0 };
-    void parseData(const QJsonObject&) override;
+    int m_combinedViewerCount{0};
+    void parseData(const QJsonObject &) override;
 };
 
 }

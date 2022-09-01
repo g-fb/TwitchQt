@@ -9,11 +9,13 @@
 
 #include "twitchqt_export.h"
 
-#include "twitchreply.hpp"
 #include "twitchbadge.hpp"
+#include "twitchreply.hpp"
 
-namespace Twitch {
-class TWITCHQT_EXPORT GlobalBadgesReply : public JSONReply {
+namespace Twitch
+{
+class TWITCHQT_EXPORT GlobalBadgesReply : public JSONReply
+{
     Q_OBJECT
 public:
     using JSONReply::JSONReply;
@@ -21,7 +23,7 @@ public:
     Twitch::Badges badges();
 
 protected:
-    void parseData(const QJsonObject&) override;
+    void parseData(const QJsonObject &) override;
 };
 
 // Pretty much the same algorithm for parsing the json document

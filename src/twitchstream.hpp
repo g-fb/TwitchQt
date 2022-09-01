@@ -12,14 +12,11 @@
 #include <QString>
 #include <QVector>
 
-namespace Twitch {
+namespace Twitch
+{
 /// Models
 struct Stream {
-    enum class StreamType {
-        No,
-        Live,
-        Vodcast
-    };
+    enum class StreamType { No, Live, Vodcast };
     QString m_id;
     QString m_userId;
     QString m_userName;

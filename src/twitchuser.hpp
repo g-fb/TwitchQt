@@ -10,20 +10,12 @@
 #include <QObject>
 #include <QString>
 
-namespace Twitch {
+namespace Twitch
+{
 // Models
 struct User {
-    enum class UserType {
-        No,
-        GlobalMod,
-        Admin,
-        Staff
-    };
-    enum class BroadcasterType {
-        No,
-        Partner,
-        Affiliate
-    };
+    enum class UserType { No, GlobalMod, Admin, Staff };
+    enum class BroadcasterType { No, Partner, Affiliate };
     BroadcasterType m_broadcasterType;
     QString m_description;
     QString m_displayName;

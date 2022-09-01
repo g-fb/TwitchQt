@@ -9,34 +9,32 @@
 
 #include "twitchqt_export.h"
 
+#include <QImage>
 #include <QJsonObject>
 #include <QNetworkReply>
 #include <QVariant>
-#include <QImage>
 
-namespace Twitch {
-enum class ReplyState {
-    Pending,
-    Success,
-    Error
-};
+namespace Twitch
+{
+enum class ReplyState { Pending, Success, Error };
 
-class TWITCHQT_EXPORT Reply : public QObject {
+class TWITCHQT_EXPORT Reply : public QObject
+{
     Q_OBJECT
 public:
-    template <class T>
-    static T* fromData(QObject*, const QVariant&);
+    template<class T>
+    static T *fromData(QObject *, const QVariant &);
 
     Reply();
-    Reply(QNetworkReply*);
+    Reply(QNetworkReply *);
     virtual ~Reply();
 
-    const ReplyState& currentState() const;
+    const ReplyState &currentState() const;
     operator bool() const;
 
-    QVariant& data();
+    QVariant &data();
 
-    const QString& cursor() const;
+    const QString &cursor() const;
 signals:
     void downloadProgress(qint64, qint64);
     void finished();
@@ -44,51 +42,54 @@ signals:
 protected:
     virtual void onFinished() = 0;
 
-    QNetworkReply* m_reply;
+    QNetworkReply *m_reply;
     ReplyState m_currentState;
     QVariant m_data;
     QString m_cursor;
 };
 
-class TWITCHQT_EXPORT RawReply : public Reply {
+class TWITCHQT_EXPORT RawReply : public Reply
+{
     Q_OBJECT
 public:
     using Reply::Reply;
-    RawReply(QNetworkReply*);
+    RawReply(QNetworkReply *);
     virtual ~RawReply() override;
 
 protected:
     virtual void onFinished() override;
 
-    virtual void parseData(const QByteArray&) = 0;
+    virtual void parseData(const QByteArray &) = 0;
 };
 
-class TWITCHQT_EXPORT JSONReply : public Reply {
+class TWITCHQT_EXPORT JSONReply : public Reply
+{
     Q_OBJECT
 public:
     using Reply::Reply;
     JSONReply() = default;
-    JSONReply(QNetworkReply*);
+    JSONReply(QNetworkReply *);
     virtual ~JSONReply() override;
 
-    const QJsonObject& json() const;
+    const QJsonObject &json() const;
 
 protected:
     virtual void onFinished() override;
 
-    virtual void parseData(const QJsonObject&) = 0;
+    virtual void parseData(const QJsonObject &) = 0;
 
 private:
     QJsonObject m_json;
 };
 
-class TWITCHQT_EXPORT ImageReply : public RawReply {
+class TWITCHQT_EXPORT ImageReply : public RawReply
+{
     Q_OBJECT
 public:
     using RawReply::RawReply;
 
 protected:
-    virtual void parseData(const QByteArray&) override;
+    virtual void parseData(const QByteArray &) override;
 };
 
 }
