@@ -9,35 +9,39 @@
 
 #include <QJsonArray>
 
+Twitch::Stream streamFromJson(const QJsonObject& stream)
+{
+    QString typeStr = stream["type"].toString();
+    Twitch::Stream::StreamType type = Twitch::Stream::StreamType::No;
+    if (typeStr == "live") {
+        type = Twitch::Stream::StreamType::Live;
+    } else {
+        type = Twitch::Stream::StreamType::Vodcast;
+    }
+    QString startedAt = stream["started_at"].toString();
+
+    return Twitch::Stream {
+        stream["id"].toString("-1"),
+        stream["user_id"].toString("-1"),
+        stream["user_name"].toString(),
+        stream["game_id"].toString("-1"),
+        stream["community_ids"].toString().split(",").toVector(),
+        type,
+        stream["title"].toString(),
+        stream["viewer_count"].toInt(-1),
+        QDateTime::fromString(startedAt, Qt::ISODate),
+        stream["language"].toString(),
+        stream["thumbnail_url"].toString()
+    };
+}
+
 namespace Twitch {
 void StreamReply::parseData(const QJsonObject& json)
 {
     if (json.find("data") != json.end()) {
-        const auto& data = json["data"];
-        if (!data.toObject().isEmpty()) {
-            const auto& stream = data.toObject();
-
-            QString typeStr = stream["type"].toString();
-            Stream::StreamType type = Stream::StreamType::No;
-            if (typeStr == "live")
-                type = Stream::StreamType::Live;
-            else if (typeStr == "vodcast")
-                type = Stream::StreamType::Vodcast;
-            QString startedAt = stream["started_at"].toString();
-
-            m_data.setValue(Stream {
-                                stream["id"].toString("-1"),
-                                stream["user_id"].toString("-1"),
-                                stream["user_name"].toString(),
-                                stream["game_id"].toString("-1"),
-                                stream["community_ids"].toString().split(",").toVector(),
-                                type,
-                                stream["title"].toString(),
-                                stream["viewer_count"].toInt(-1),
-                                QDateTime::fromString(startedAt, Qt::ISODate),
-                                stream["language"].toString(),
-                                stream["thumbnail_url"].toString()
-                            });
+        const auto& data = json["data"].toObject();
+        if (!data.isEmpty()) {
+            m_data.setValue(streamFromJson(data));
         } else {
             // ???
         }
@@ -50,29 +54,7 @@ void StreamsReply::parseData(const QJsonObject &json)
     if (json.find("data") != json.end()) {
         const auto& data = json["data"].toArray();
         for (const auto& stream : data) {
-            auto streamObject = stream.toObject();
-            QString typeStr = streamObject["type"].toString();
-
-            Stream::StreamType type = Stream::StreamType::No;
-            if (typeStr == "live")
-                type = Stream::StreamType::Live;
-            else if (typeStr == "vodcast")
-                type = Stream::StreamType::Vodcast;
-            QString startedAt = streamObject["started_at"].toString();
-
-            streams.push_back(Stream {
-                                  streamObject["id"].toString("-1"),
-                                  streamObject["user_id"].toString("-1"),
-                                  streamObject["user_name"].toString(),
-                                  streamObject["game_id"].toString("-1"),
-                                  streamObject["community_ids"].toString().split(",").toVector(),
-                                  type,
-                                  streamObject["title"].toString(),
-                                  streamObject["viewer_count"].toInt(-1),
-                                  QDateTime::fromString(startedAt, Qt::ISODate),
-                                  streamObject["language"].toString(),
-                                  streamObject["thumbnail_url"].toString()
-                              });
+            streams.push_back(streamFromJson(stream.toObject()));
 
             m_combinedViewerCount += streams.back().m_viewerCount;
         }

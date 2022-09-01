@@ -9,41 +9,47 @@
 
 #include <QJsonArray>
 
+Twitch::User userFromJson(const QJsonObject& user)
+{
+    QString broadcasterTypeStr = user["broadcaster_type"].toString();
+    Twitch::User::BroadcasterType broadcasterType = Twitch::User::BroadcasterType::No;
+    if (broadcasterTypeStr == "partner") {
+        broadcasterType = Twitch::User::BroadcasterType::Partner;
+    } else {
+        broadcasterType = Twitch::User::BroadcasterType::Affiliate;
+    }
+
+    QString userTypeStr = user["type"].toString();
+    Twitch::User::UserType userType = Twitch::User::UserType::No;
+    if (userTypeStr == "global_mod") {
+        userType = Twitch::User::UserType::GlobalMod;
+    } else if (userTypeStr == "admin") {
+        userType = Twitch::User::UserType::Admin;
+    } else {
+        userType = Twitch::User::UserType::Staff;
+    }
+
+    return Twitch::User {
+        broadcasterType,
+        user["description"].toString(),
+        user["display_name"].toString(),
+        user["email"].toString(),
+        user["id"].toString("-1"),
+        user["login"].toString(),
+        user["offline_image_url"].toString(),
+        user["profile_image_url"].toString(),
+        userType,
+        user["view_count"].toInt(-1)
+    };
+}
+
 namespace Twitch {
 void UserReply::parseData(const QJsonObject& json)
 {
     if (json.find("data") != json.end()) {
         const auto& data = json["data"].toObject();
         if (!data.isEmpty()) {
-            const auto& user = data;
-            QString broadcasterTypeStr = user["broadcaster_type"].toString();
-            User::BroadcasterType broadcasterType = User::BroadcasterType::No;
-            if (broadcasterTypeStr == "partner")
-                broadcasterType = User::BroadcasterType::Partner;
-            else if (broadcasterTypeStr == "affiliate")
-                broadcasterType = User::BroadcasterType::Affiliate;
-
-            QString userTypeStr = user["type"].toString();
-            User::UserType userType = User::UserType::No;
-            if (userTypeStr == "global_mod")
-                userType = User::UserType::GlobalMod;
-            else if (userTypeStr == "admin")
-                userType = User::UserType::Admin;
-            else if (userTypeStr == "staff")
-                userType = User::UserType::Staff;
-
-            m_data.setValue(User {
-                                broadcasterType,
-                                user["description"].toString(),
-                                user["display_name"].toString(),
-                                user["email"].toString(),
-                                user["id"].toString("-1"),
-                                user["login"].toString(),
-                                user["offline_image_url"].toString(),
-                                user["profile_image_url"].toString(),
-                                userType,
-                                user["view_count"].toInt(-1)
-                            });
+            m_data.setValue(userFromJson(data));
         }
     }
 }
@@ -54,35 +60,7 @@ void UsersReply::parseData(const QJsonObject &json)
     if (json.find("data") != json.end()) {
         const auto& data = json["data"].toArray();
         for (const auto& user : data) {
-            auto userObject = user.toObject();
-            QString broadcasterTypeStr = userObject["broadcaster_type"].toString();
-            User::BroadcasterType broadcasterType = User::BroadcasterType::No;
-            if (broadcasterTypeStr == "partner")
-                broadcasterType = User::BroadcasterType::Partner;
-            else if (broadcasterTypeStr == "affiliate")
-                broadcasterType = User::BroadcasterType::Affiliate;
-
-            QString userTypeStr = userObject["type"].toString();
-            User::UserType userType = User::UserType::No;
-            if (userTypeStr == "global_mod")
-                userType = User::UserType::GlobalMod;
-            else if (userTypeStr == "admin")
-                userType = User::UserType::Admin;
-            else if (userTypeStr == "staff")
-                userType = User::UserType::Staff;
-
-            users.push_back(User {
-                                broadcasterType,
-                                userObject["description"].toString(),
-                                userObject["display_name"].toString(),
-                                userObject["email"].toString(),
-                                userObject["id"].toString("-1"),
-                                userObject["login"].toString(),
-                                userObject["offline_image_url"].toString(),
-                                userObject["profile_image_url"].toString(),
-                                userType,
-                                userObject["view_count"].toInt(-1)
-                            });
+            users.push_back(userFromJson(user.toObject()));
         }
     }
     m_data.setValue(users);

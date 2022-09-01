@@ -9,18 +9,22 @@
 
 #include <QJsonArray>
 
+Twitch::Game gameFromJson(const QJsonObject& game)
+{
+    return Twitch::Game {
+        game["id"].toString(),
+        game["name"].toString(),
+        game["box_art_url"].toString()
+    };
+}
+
 namespace Twitch {
 void GameReply::parseData(const QJsonObject &json)
 {
     if (json.find("data") != json.end()) {
-        const auto& data = json["data"];
-        if (!data.toObject().isEmpty()) {
-            const auto& game = data.toObject();
-            m_data.setValue(Game {
-                                game["id"].toString(),
-                                game["name"].toString(),
-                                game["box_art_url"].toString()
-                            });
+        const auto& data = json["data"].toObject();
+        if (!data.isEmpty()) {
+            m_data.setValue(gameFromJson(data));
         }
     } else {
         // ??
@@ -33,11 +37,7 @@ void GamesReply::parseData(const QJsonObject &json)
     if (json.find("data") != json.end()) {
         const auto& data = json["data"].toArray();
         for (const auto& game : data) {
-            games.push_back(Game {
-                                game.toObject()["id"].toString(),
-                                game.toObject()["name"].toString(),
-                                game.toObject()["box_art_url"].toString()
-                            });
+            games.push_back(gameFromJson(game.toObject()));
         }
     } else {
         // ??
