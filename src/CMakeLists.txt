@@ -34,12 +34,20 @@ target_link_libraries(TwitchQt
         Qt${QT_MAJOR_VERSION}::Network
 )
 
-install(TARGETS TwitchQt
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            COMPONENT   Runtime
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT          Runtime
-            NAMELINK_COMPONENT Development
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT   Development
+ecm_generate_headers(TwitchQt_HEADERS
+    HEADER_EXTENSION hpp
+    HEADER_NAMES
+        TwitchApi
+
+    REQUIRED_HEADERS TwitchQt_HEADERS
+)
+
+install(TARGETS TwitchQt ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+
+install(
+    FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/twitchqt_export.h
+        ${TwitchQt_HEADERS}
+    DESTINATION
+        ${KDE_INSTALL_LIBDIR}/TwitchQt COMPONENT Devel
 )

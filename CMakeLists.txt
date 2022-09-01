@@ -13,12 +13,13 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(ECM 5.66 REQUIRED NO_MODULE)
+find_package(ECM 5.79 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-include(GNUInstallDirs)
 include(FeatureSummary)
 include(GenerateExportHeader)
+include(KDEInstallDirs)
+include(ECMGenerateHeaders)
 include(KDEGitCommitHooks)
 include(KDEClangFormat)
 
