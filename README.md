@@ -13,9 +13,8 @@ A simple Header-only Qt wrapper for the new Twitch.tv api(Helix) written using Q
 ## Requirements
 #### Qt5
 - Core
+- Gui
 - Network
-#### C++11 compatible compiler
-- [JSON for Modern C++ (already included)](https://github.com/nlohmann/json) 
 
 ## Usage
 #### CMake
