@@ -39,11 +39,11 @@ Reply::Reply(QNetworkReply* reply)
 
     #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     connect(m_reply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error),
-        [this](QNetworkReply::NetworkError) {
+        this, [this](QNetworkReply::NetworkError) {
             m_currentState = ReplyState::Error;
         });
     #else
-    connect(m_reply, &QNetworkReply::errorOccurred, [this](QNetworkReply::NetworkError) {
+    connect(m_reply, &QNetworkReply::errorOccurred, this, [this](QNetworkReply::NetworkError) {
         m_currentState = ReplyState::Error;
     });
     #endif
