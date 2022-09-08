@@ -63,9 +63,9 @@ namespace Twitch
 void VideoReply::parseData(const QJsonObject &json)
 {
     if (json.find("data") != json.end()) {
-        const auto &data = json["data"].toObject();
+        const auto &data = json["data"].toArray();
         if (!data.isEmpty()) {
-            m_data.setValue(videoFromJson(data));
+            m_data.setValue(videoFromJson(data.first().toObject()));
         } else {
             // ???
         }

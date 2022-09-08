@@ -38,9 +38,9 @@ namespace Twitch
 void StreamReply::parseData(const QJsonObject &json)
 {
     if (json.find("data") != json.end()) {
-        const auto &data = json["data"].toObject();
+        const auto &data = json["data"].toArray();
         if (!data.isEmpty()) {
-            m_data.setValue(streamFromJson(data));
+            m_data.setValue(streamFromJson(data.first().toObject()));
         } else {
             // ???
         }
