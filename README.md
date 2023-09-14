@@ -63,4 +63,4 @@ int main(int argc, char* argv[])
 ```
 
 ## Features
-Look at the [twitchapi.hpp](https://github.com/g-fb/TwitchQt/blob/master/src/twitchapi.hpp) file :)
+Look at the [twitchqt.hpp](src/twitchqt.hpp) file :)
