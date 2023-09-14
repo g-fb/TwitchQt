@@ -9,6 +9,7 @@ add_library(TwitchQt::TwitchQt ALIAS TwitchQt)
 
 target_sources(TwitchQt
     PRIVATE
+        channelreply.cpp
         twitchqt.cpp
         twitchbadgereply.cpp
         twitchemotereply.cpp

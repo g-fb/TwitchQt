@@ -314,6 +314,21 @@ VideosReply *Api::getVideosByUserId(const QString &id, int first, const QString 
     return createReply<VideosReply>(request);
 }
 
+ChannelsReply *Api::getFollowedChannel(const QString &user_id, const QString &broadcaster_id, int first, const QString &after)
+{
+    QString url = api() + QString("/channels/followed") + QString("?user_id=") + user_id;
+    if (!broadcaster_id.isEmpty()) {
+        url += QString("&broadcaster_id=") + broadcaster_id;
+    }
+    url += QString("&first=") + QString::number(first);
+    if (!after.isEmpty()) {
+        url += QString("&after=") + after;
+    }
+
+    auto request = buildRequest(QUrl(url));
+    return createReply<ChannelsReply>(request);
+}
+
 // Users Follows
 UserFollowsReply *Api::getUserFollowsFromId(const QString &userId)
 {
@@ -404,3 +419,5 @@ Twitch::ChannelBadgesReply *Twitch::Api::getChannelBadges(const QString &id)
     return createReply<GlobalBadgesReply>(request);
 }
 }
+
+#include "moc_twitchqt.cpp"

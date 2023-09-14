@@ -13,6 +13,7 @@
 #include <QNetworkDiskCache>
 #include <QStandardPaths>
 
+#include "channelreply.hpp"
 #include "twitchbadgereply.hpp"
 #include "twitchemotereply.hpp"
 #include "twitchgamereply.hpp"
@@ -67,6 +68,9 @@ public:
     // Videos
     virtual VideoReply *getVideoById(const QString &);
     virtual VideosReply *getVideosByUserId(const QString &, ObjectCount = 30, const Cursor & = Cursor());
+
+    // Channels Follows
+    virtual ChannelsReply *getFollowedChannel(const QString &, const QString & = QString(), ObjectCount = 30, const Cursor & = Cursor());
 
     // Users Follows
     virtual UserFollowsReply *getUserFollowsFromId(const QString &ID);
