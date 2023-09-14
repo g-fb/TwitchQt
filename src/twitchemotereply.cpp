@@ -36,3 +36,5 @@ void EmotesReply::parseData(const QJsonObject &json)
     m_data.setValue(emotes);
 }
 }
+
+#include "moc_twitchemotereply.cpp"

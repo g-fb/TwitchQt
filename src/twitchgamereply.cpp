@@ -52,3 +52,5 @@ void BoxArtReply::parseData(const QByteArray &data)
     m_data.setValue(QImage::fromData(data));
 }
 }
+
+#include "moc_twitchgamereply.cpp"

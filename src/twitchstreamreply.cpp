@@ -76,3 +76,5 @@ Twitch::Streams Twitch::StreamsReply::streams()
     return m_data.value<Twitch::Streams>();
 }
 }
+
+#include "moc_twitchstreamreply.cpp"

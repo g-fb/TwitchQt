@@ -99,3 +99,5 @@ Twitch::Videos Twitch::VideosReply::videos()
     return m_data.value<Twitch::Videos>();
 }
 }
+
+#include "moc_twitchvideoreply.cpp"

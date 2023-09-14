@@ -144,3 +144,5 @@ const QJsonObject &Twitch::JSONReply::json() const
     return m_json;
 }
 }
+
+#include "moc_twitchreply.cpp"

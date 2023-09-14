@@ -100,3 +100,5 @@ Twitch::UserFollows Twitch::UserFollowsReply::userFollows()
     return m_data.value<Twitch::UserFollows>();
 }
 }
+
+#include "moc_twitchuserreply.cpp"

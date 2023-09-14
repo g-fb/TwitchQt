@@ -39,3 +39,5 @@ Twitch::Badges Twitch::GlobalBadgesReply::badges()
     return m_data.value<Twitch::Badges>();
 }
 }
+
+#include "moc_twitchbadgereply.cpp"
