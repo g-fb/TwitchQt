@@ -9,8 +9,8 @@
 
 #include "twitchqt_export.h"
 
-#include "twitchbadge.hpp"
-#include "twitchreply.hpp"
+#include "badge.hpp"
+#include "reply.hpp"
 
 namespace Twitch
 {

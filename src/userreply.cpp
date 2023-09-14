@@ -5,7 +5,7 @@
     SPDX-License-Identifier: MIT
 */
 
-#include "twitchuserreply.hpp"
+#include "userreply.hpp"
 
 #include <QJsonArray>
 
@@ -101,4 +101,4 @@ Twitch::UserFollows Twitch::UserFollowsReply::userFollows()
 }
 }
 
-#include "moc_twitchuserreply.cpp"
+#include "moc_userreply.cpp"

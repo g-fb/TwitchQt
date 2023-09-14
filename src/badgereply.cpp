@@ -5,7 +5,7 @@
     SPDX-License-Identifier: MIT
 */
 
-#include "twitchbadgereply.hpp"
+#include "badgereply.hpp"
 
 #include <QJsonArray>
 
@@ -40,4 +40,4 @@ Twitch::Badges Twitch::GlobalBadgesReply::badges()
 }
 }
 
-#include "moc_twitchbadgereply.cpp"
+#include "moc_badgereply.cpp"

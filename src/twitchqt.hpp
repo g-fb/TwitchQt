@@ -14,12 +14,12 @@
 #include <QStandardPaths>
 
 #include "channelreply.hpp"
-#include "twitchbadgereply.hpp"
-#include "twitchemotereply.hpp"
-#include "twitchgamereply.hpp"
-#include "twitchstreamreply.hpp"
-#include "twitchuserreply.hpp"
-#include "twitchvideoreply.hpp"
+#include "badgereply.hpp"
+#include "emotereply.hpp"
+#include "gamereply.hpp"
+#include "streamreply.hpp"
+#include "userreply.hpp"
+#include "videoreply.hpp"
 
 namespace Twitch
 {

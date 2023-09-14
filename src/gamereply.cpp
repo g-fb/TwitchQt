@@ -5,7 +5,7 @@
     SPDX-License-Identifier: MIT
 */
 
-#include "twitchgamereply.hpp"
+#include "gamereply.hpp"
 
 #include <QJsonArray>
 
@@ -53,4 +53,4 @@ void BoxArtReply::parseData(const QByteArray &data)
 }
 }
 
-#include "moc_twitchgamereply.cpp"
+#include "moc_gamereply.cpp"

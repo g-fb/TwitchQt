@@ -5,7 +5,7 @@
     SPDX-License-Identifier: MIT
 */
 
-#include "twitchstreamreply.hpp"
+#include "streamreply.hpp"
 
 #include <QJsonArray>
 
@@ -77,4 +77,4 @@ Twitch::Streams Twitch::StreamsReply::streams()
 }
 }
 
-#include "moc_twitchstreamreply.cpp"
+#include "moc_streamreply.cpp"

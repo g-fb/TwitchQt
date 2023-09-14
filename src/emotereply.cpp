@@ -5,7 +5,7 @@
     SPDX-License-Identifier: MIT
 */
 
-#include "twitchemotereply.hpp"
+#include "emotereply.hpp"
 
 #include <QJsonArray>
 
@@ -37,4 +37,4 @@ void EmotesReply::parseData(const QJsonObject &json)
 }
 }
 
-#include "moc_twitchemotereply.cpp"
+#include "moc_emotereply.cpp"

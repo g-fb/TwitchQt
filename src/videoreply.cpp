@@ -5,7 +5,7 @@
     SPDX-License-Identifier: MIT
 */
 
-#include "twitchvideoreply.hpp"
+#include "videoreply.hpp"
 
 #include <QJsonArray>
 
@@ -100,4 +100,4 @@ Twitch::Videos Twitch::VideosReply::videos()
 }
 }
 
-#include "moc_twitchvideoreply.cpp"
+#include "moc_videoreply.cpp"

@@ -9,16 +9,16 @@ add_library(TwitchQt::TwitchQt ALIAS TwitchQt)
 
 target_sources(TwitchQt
     PRIVATE
-        channelreply.cpp
-        twitchqt.cpp
-        twitchbadgereply.cpp
-        twitchemotereply.cpp
-        twitchgame.hpp
-        twitchgamereply.cpp
-        twitchreply.cpp
-        twitchstreamreply.cpp
-        twitchuserreply.cpp
-        twitchvideoreply.cpp
+        channelreply.hpp channelreply.cpp
+        badgereply.hpp badgereply.cpp
+        emotereply.hpp emotereply.cpp
+        game.hpp game.hpp
+        gamereply.hpp gamereply.cpp
+        reply.hpp reply.cpp
+        streamreply.hpp streamreply.cpp
+        twitchqt.hpp twitchqt.cpp
+        userreply.hpp userreply.cpp
+        videoreply.hpp videoreply.cpp
 )
 
 generate_export_header(TwitchQt)

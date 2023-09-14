@@ -10,8 +10,8 @@
 
 #include "twitchqt_export.h"
 
-#include "twitchemote.hpp"
-#include "twitchreply.hpp"
+#include "emote.hpp"
+#include "reply.hpp"
 
 namespace Twitch
 {

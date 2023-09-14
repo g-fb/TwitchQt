@@ -9,8 +9,8 @@
 
 #include "twitchqt_export.h"
 
-#include "twitchreply.hpp"
-#include "twitchuser.hpp"
+#include "reply.hpp"
+#include "user.hpp"
 #include <iostream>
 
 namespace Twitch

@@ -5,7 +5,7 @@
     SPDX-License-Identifier: MIT
 */
 
-#include "twitchreply.hpp"
+#include "reply.hpp"
 
 #include <QJsonDocument>
 #include <QString>
@@ -145,4 +145,4 @@ const QJsonObject &Twitch::JSONReply::json() const
 }
 }
 
-#include "moc_twitchreply.cpp"
+#include "moc_reply.cpp"
