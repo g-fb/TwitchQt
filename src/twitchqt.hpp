@@ -13,8 +13,8 @@
 #include <QNetworkDiskCache>
 #include <QStandardPaths>
 
-#include "channelreply.hpp"
 #include "badgereply.hpp"
+#include "channelreply.hpp"
 #include "emotereply.hpp"
 #include "gamereply.hpp"
 #include "streamreply.hpp"
