@@ -8,10 +8,10 @@ SPDX-License-Identifier: MIT
 
 _Fork of https://github.com/jkbz64/TwitchQt_
 
-A simple Qt library for the new Twitch.tv api (Helix) written using Qt5.
+A simple Qt library for the new Twitch.tv api (Helix) written using Qt6.
 
 ## Requirements
-#### Qt5
+#### Qt6
 - Core
 - Gui
 - Network
