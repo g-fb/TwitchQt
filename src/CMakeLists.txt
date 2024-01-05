@@ -30,9 +30,9 @@ target_include_directories(TwitchQt
 
 target_link_libraries(TwitchQt
     PRIVATE
-        Qt${QT_MAJOR_VERSION}::Core
-        Qt${QT_MAJOR_VERSION}::Gui
-        Qt${QT_MAJOR_VERSION}::Network
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Network
 )
 
 ecm_generate_headers(TwitchQt_HEADERS

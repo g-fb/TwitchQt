@@ -28,7 +28,7 @@ void GlobalBadgesReply::parseData(const QJsonObject &json)
                     version["image_url_4x"].toString(),
                 });
             }
-            badges.push_back(Twitch::Badge{badge["set_id"].toString(), versions});
+            badges.push_back(Twitch::Badge{badge[QStringLiteral("set_id")].toString(), versions});
         }
     }
     m_data.setValue(badges);

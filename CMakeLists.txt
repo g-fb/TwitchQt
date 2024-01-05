@@ -27,13 +27,7 @@ file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h *.hpp *.c)
 kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
 kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS
-    Core
-    Gui
-    Network
-)
-
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS
+find_package(Qt6 COMPONENTS
     Core
     Gui
     Network
