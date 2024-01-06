@@ -13,18 +13,18 @@ Twitch::Stream streamFromJson(const QJsonObject &stream)
 {
     QString typeStr = stream[u"type"_qs].toString();
     Twitch::Stream::StreamType type = Twitch::Stream::StreamType::No;
-    if (typeStr == "live") {
+    if (typeStr == u"live"_qs) {
         type = Twitch::Stream::StreamType::Live;
     } else {
         type = Twitch::Stream::StreamType::Vodcast;
     }
     QString startedAt = stream[u"started_at"_qs].toString();
 
-    return Twitch::Stream{stream[u"id"_qs].toString("-1"),
-                          stream[u"user_id"_qs].toString("-1"),
+    return Twitch::Stream{stream[u"id"_qs].toString(u"-1"_qs),
+                          stream[u"user_id"_qs].toString(u"-1"_qs),
                           stream[u"user_name"_qs].toString(),
-                          stream[u"game_id"_qs].toString("-1"),
-                          stream[u"community_ids"_qs].toString().split(",").toVector(),
+                          stream[u"game_id"_qs].toString(u"-1"_qs),
+                          stream[u"community_ids"_qs].toString().split(u","_qs).toVector(),
                           type,
                           stream[u"title"_qs].toString(),
                           stream[u"viewer_count"_qs].toInt(-1),

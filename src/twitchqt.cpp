@@ -15,7 +15,7 @@ Api::Api(QObject *parent)
 {
     resetRateLimit();
     auto diskCache = new QNetworkDiskCache(m_http);
-    diskCache->setCacheDirectory(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/TCache");
+    diskCache->setCacheDirectory(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + u"/TCache"_qs);
     m_http->setCache(diskCache);
 }
 
@@ -42,22 +42,22 @@ Api::~Api() = default;
 
 QString Api::api() const
 {
-    return QString("https://api.twitch.tv/helix");
+    return u"https://api.twitch.tv/helix"_qs;
 }
 
 QString Api::emotesApi() const
 {
-    return QString("https://twitchemotes.com/api_cache/v3");
+    return u"https://twitchemotes.com/api_cache/v3"_qs;
 }
 
 QString Api::ffzApi() const
 {
-    return QString("https://api.frankerfacez.com/v1");
+    return u"https://api.frankerfacez.com/v1"_qs;
 }
 
 QString Api::bttvApi() const
 {
-    return QString("https://api.betterttv.net/2");
+    return u"https://api.betterttv.net/2"_qs;
 }
 
 const QString &Api::clientID() const
@@ -97,7 +97,7 @@ const QDateTime &Api::resetDate() const
 
 QString Api::repeatDelimeter(const QString &parameter, const QChar &delimeter) const
 {
-    return QString(QString(delimeter) + "{parameter}=").replace("{parameter}", parameter);
+    return QString(QString(delimeter) + u"{parameter}="_qs).replace(u"{parameter}"_qs, parameter);
 }
 
 QNetworkRequest Api::buildRequest(QUrl url, bool includeID, const CacheFlag cacheFlag)
@@ -107,7 +107,7 @@ QNetworkRequest Api::buildRequest(QUrl url, bool includeID, const CacheFlag cach
     if (includeID)
         request.setRawHeader("Client-ID", m_clientID.toUtf8());
 
-    request.setRawHeader("Authorization", QString("Bearer %1").arg(bearerToken()).toUtf8());
+    request.setRawHeader("Authorization", u"Bearer %1"_qs.arg(bearerToken()).toUtf8());
 
     switch (cacheFlag) {
     case CacheFlag::UseNetworkDoNotCache:
@@ -168,31 +168,31 @@ void Twitch::Api::resetRateLimit()
 // Games
 GamesReply *Api::getTopGames(int first, const QString &after)
 {
-    QString url = api() + QString("/games/top") + QString("?first=") + QString::number(first);
+    QString url = api() + u"/games/top?first="_qs + QString::number(first);
     if (!after.isEmpty())
-        url += QString("&after=") + after;
+        url += u"&after="_qs + after;
 
-    auto request = buildRequest(url);
+    auto request = buildRequest(QUrl(url));
     return createReply<GamesReply>(request);
 }
 
 GameReply *Api::getGameById(const QString &id)
 {
-    const QUrl url = api() + QString("/games") + QString("?id=") + id;
+    const QUrl url{api() + u"/games?id="_qs + id};
     auto request = buildRequest(QUrl(url));
     return createReply<GameReply>(request);
 }
 
 GamesReply *Api::getGameByIds(const QStringList &ids)
 {
-    const QUrl url = api() + QString("/games") + QString("?id=") + ids.join(repeatDelimeter("id"));
+    const QUrl url{api() + u"/games?id="_qs + ids.join(repeatDelimeter(u"id"_qs))};
     auto request = buildRequest(QUrl(url));
     return createReply<GamesReply>(request);
 }
 
 GameReply *Api::getGameByName(const QString &name)
 {
-    const QUrl url = api() + QString("/games") + QString("?name=") + name;
+    const QUrl url{api() + u"/games?name="_qs + name};
     auto request = buildRequest(QUrl(url));
     return createReply<GameReply>(request);
 }
@@ -200,14 +200,14 @@ GameReply *Api::getGameByName(const QString &name)
 BoxArtReply *Api::getBoxArtByUrl(const QString &url, int width, int height)
 {
     QString targetUrl = url;
-    targetUrl = targetUrl.replace("{width}x{height}", QString::number(width) + "x" + QString::number(height));
+    targetUrl = targetUrl.replace(u"{width}x{height}"_qs, QString::number(width) + u"x"_qs + QString::number(height));
     auto request = buildRequest(QUrl(targetUrl), false, CacheFlag::PreferCache);
     return createReply<BoxArtReply>(request);
 }
 
 GamesReply *Api::getGameByNames(const QStringList &names)
 {
-    const QUrl url = api() + QString("/games") + QString("?name=") + names.join(repeatDelimeter("name"));
+    const QUrl url{api() + u"/games?name="_qs + names.join(repeatDelimeter(u"name"_qs))};
     auto request = buildRequest(QUrl(url));
     return createReply<GamesReply>(request);
 }
@@ -216,7 +216,7 @@ GamesReply *Api::getGameByNames(const QStringList &names)
 
 StreamReply *Api::getStreamByUserId(const QString &userId)
 {
-    const QUrl url = api() + QString("/streams") + QString("?user_id=") + userId;
+    const QUrl url{api() + u"/streams?user_id="_qs + userId};
 
     auto request = buildRequest(QUrl(url));
     return createReply<StreamReply>(request);
@@ -224,7 +224,7 @@ StreamReply *Api::getStreamByUserId(const QString &userId)
 
 StreamReply *Api::getStreamByName(const QString &userName)
 {
-    const QUrl url = api() + QString("/streams") + QString("?user_login=") + userName;
+    const QUrl url{api() + u"/streams?user_login="_qs + userName};
 
     auto request = buildRequest(QUrl(url));
     return createReply<StreamReply>(request);
@@ -232,9 +232,9 @@ StreamReply *Api::getStreamByName(const QString &userName)
 
 StreamsReply *Api::getStreamsByNames(const QStringList &names, int first, const QString &after)
 {
-    QString url = api() + QString("/streams") + QString("?first=") + QString::number(first) + QString("&user_login=") + names.join("&user_login=");
+    QString url = api() + u"/streams?first="_qs + QString::number(first) + u"&user_login="_qs + names.join(u"&user_login="_qs);
     if (!after.isEmpty())
-        url += QString("&after=") + after;
+        url += u"&after="_qs + after;
 
     auto request = buildRequest(QUrl(url));
     return createReply<StreamsReply>(request);
@@ -242,9 +242,9 @@ StreamsReply *Api::getStreamsByNames(const QStringList &names, int first, const 
 
 StreamsReply *Api::getStreamsByUserIds(const QStringList &ids, int first, const QString &after)
 {
-    QString url = api() + QString("/streams") + QString("?first=") + QString::number(first) + QString("&user_id=") + ids.join("&user_id=");
+    QString url = api() + u"/streams?first="_qs + QString::number(first) + u"&user_id="_qs + ids.join(u"&user_id="_qs);
     if (!after.isEmpty())
-        url += QString("&after=") + after;
+        url += u"&after="_qs + after;
 
     auto request = buildRequest(QUrl(url));
     return createReply<StreamsReply>(request);
@@ -252,9 +252,9 @@ StreamsReply *Api::getStreamsByUserIds(const QStringList &ids, int first, const 
 
 StreamsReply *Api::getStreamsByGameId(const QString &gameId, int first, const QString &after)
 {
-    QString url = api() + QString("/streams") + QString("?first=") + QString::number(first) + QString("&game_id=") + gameId;
+    QString url = api() + u"/streams?first="_qs + QString::number(first) + u"&game_id="_qs + gameId;
     if (!after.isEmpty())
-        url += QString("&after=") + after;
+        url += u"&after="_qs + after;
 
     auto request = buildRequest(QUrl(url));
     return createReply<StreamsReply>(request);
@@ -262,9 +262,9 @@ StreamsReply *Api::getStreamsByGameId(const QString &gameId, int first, const QS
 
 StreamsReply *Api::getStreamsByGameIds(const QStringList &ids, int first, const QString &after)
 {
-    QString url = api() + QString("/streams") + QString("?first=") + QString::number(first) + QString("&game_id=") + ids.join("&game_id=");
+    QString url = api() + u"/streams?first="_qs + QString::number(first) + u"&game_id="_qs + ids.join(u"&game_id="_qs);
     if (!after.isEmpty())
-        url += QString("&after=") + after;
+        url += u"&after="_qs + after;
 
     auto request = buildRequest(QUrl(url));
     return createReply<StreamsReply>(request);
@@ -272,9 +272,9 @@ StreamsReply *Api::getStreamsByGameIds(const QStringList &ids, int first, const 
 
 StreamsReply *Api::getStreamsByLanguage(const QString &language, int first, const QString &after)
 {
-    QString url = api() + QString("/streams") + QString("?first=") + QString::number(first) + QString("?language=") + language;
+    QString url = api() + u"/streams?first="_qs + QString::number(first) + u"?language="_qs + language;
     if (!after.isEmpty())
-        url += QString("&after=") + after;
+        url += u"&after="_qs + after;
 
     auto request = buildRequest(QUrl(url));
     return createReply<StreamsReply>(request);
@@ -282,10 +282,9 @@ StreamsReply *Api::getStreamsByLanguage(const QString &language, int first, cons
 
 StreamsReply *Api::getStreamsByLanguages(const QStringList &languages, int first, const QString &after)
 {
-    QString url =
-        api() + QString("/streams") + QString("?first=") + QString::number(first) + QString("?language=") + languages.join(repeatDelimeter("language"));
+    QString url = api() + u"/streams?first="_qs + QString::number(first) + u"?language="_qs + languages.join(repeatDelimeter(u"language"_qs));
     if (!after.isEmpty())
-        url += QString("&after=") + after;
+        url += u"&after="_qs + after;
 
     auto request = buildRequest(QUrl(url));
     return createReply<StreamsReply>(request);
@@ -294,7 +293,7 @@ StreamsReply *Api::getStreamsByLanguages(const QStringList &languages, int first
 // Videos
 VideoReply *Api::getVideoById(const QString &id)
 {
-    const QUrl url = api() + QString("/videos") + QString("?id=") + id;
+    const QUrl url{api() + u"/videos?id="_qs + id};
 
     auto request = buildRequest(QUrl(url));
     return createReply<VideoReply>(request);
@@ -302,9 +301,9 @@ VideoReply *Api::getVideoById(const QString &id)
 
 VideosReply *Api::getVideosByUserId(const QString &id, int first, const QString &after)
 {
-    QString url = api() + QString("/videos") + QString("?first=") + QString::number(first) + QString("&user_id=") + id;
+    QString url = api() + u"/videos?first="_qs + QString::number(first) + u"&user_id="_qs + id;
     if (!after.isEmpty())
-        url += QString("&after=") + after;
+        url += u"&after="_qs + after;
 
     auto request = buildRequest(QUrl(url));
     return createReply<VideosReply>(request);
@@ -312,13 +311,13 @@ VideosReply *Api::getVideosByUserId(const QString &id, int first, const QString 
 
 ChannelsReply *Api::getFollowedChannel(const QString &user_id, const QString &broadcaster_id, int first, const QString &after)
 {
-    QString url = api() + QString("/channels/followed") + QString("?user_id=") + user_id;
+    QString url = api() + u"/channels/followed?user_id="_qs + user_id;
     if (!broadcaster_id.isEmpty()) {
-        url += QString("&broadcaster_id=") + broadcaster_id;
+        url += u"&broadcaster_id="_qs + broadcaster_id;
     }
-    url += QString("&first=") + QString::number(first);
+    url += u"&first="_qs + QString::number(first);
     if (!after.isEmpty()) {
-        url += QString("&after=") + after;
+        url += u"&after="_qs + after;
     }
 
     auto request = buildRequest(QUrl(url));
@@ -328,7 +327,7 @@ ChannelsReply *Api::getFollowedChannel(const QString &user_id, const QString &br
 // Users Follows
 UserFollowsReply *Api::getUserFollowsFromId(const QString &userId)
 {
-    const QUrl url = api() + QString("/users/follows") + QString("?from_id=") + userId;
+    const QUrl url{api() + u"/users/follows?from_id="_qs + userId};
 
     auto request = buildRequest(QUrl(url));
     return createReply<UserFollowsReply>(request);
@@ -336,7 +335,7 @@ UserFollowsReply *Api::getUserFollowsFromId(const QString &userId)
 
 UserFollowsReply *Api::getUserFollowsToId(const QString &userId)
 {
-    const QUrl url = api() + QString("/users/follows") + QString("?to_id=") + userId;
+    const QUrl url{api() + u"/users/follows?to_id="_qs + userId};
 
     auto request = buildRequest(QUrl(url));
     return createReply<UserFollowsReply>(request);
@@ -345,7 +344,7 @@ UserFollowsReply *Api::getUserFollowsToId(const QString &userId)
 // User
 UserReply *Api::getUserById(const QString &userId)
 {
-    const QUrl url = api() + QString("/users") + QString("?id=") + userId;
+    const QUrl url{api() + u"/users?id="_qs + userId};
 
     auto request = buildRequest(QUrl(url));
     return createReply<UserReply>(request);
@@ -353,7 +352,7 @@ UserReply *Api::getUserById(const QString &userId)
 
 UserReply *Api::getUserByName(const QString &name)
 {
-    const QUrl url = api() + QString("/users") + QString("?login=") + name;
+    const QUrl url{api() + u"/users?login="_qs + name};
 
     auto request = buildRequest(QUrl(url));
     return createReply<UserReply>(request);
@@ -361,9 +360,9 @@ UserReply *Api::getUserByName(const QString &name)
 
 UsersReply *Api::getUserByIds(const QStringList &ids, const QString &after)
 {
-    QString url = api() + QString("/users") + QString("?id=") + ids.join(repeatDelimeter("id"));
+    QString url = api() + u"/users?id="_qs + ids.join(repeatDelimeter(u"id"_qs));
     if (!after.isEmpty())
-        url += QString("&after=") + after;
+        url += u"&after="_qs + after;
 
     auto request = buildRequest(QUrl(url));
     return createReply<UsersReply>(request);
@@ -371,9 +370,9 @@ UsersReply *Api::getUserByIds(const QStringList &ids, const QString &after)
 
 UsersReply *Api::getUserByNames(const QStringList &names, const QString &after)
 {
-    QString url = api() + QString("/users") + QString("?login=") + names.join(repeatDelimeter("login"));
+    QString url = api() + u"/users?login="_qs + names.join(repeatDelimeter(u"login"_qs));
     if (!after.isEmpty())
-        url += QString("&after=") + after;
+        url += u"&after="_qs + after;
 
     auto request = buildRequest(QUrl(url));
     return createReply<UsersReply>(request);
@@ -382,35 +381,35 @@ UsersReply *Api::getUserByNames(const QStringList &names, const QString &after)
 // Emotes
 EmotesReply *Api::getGlobalEmotes()
 {
-    const QUrl url = api() + QString("/chat/emotes/global");
+    const QUrl url{api() + u"/chat/emotes/global"_qs};
     auto request = buildRequest(QUrl(url));
     return createReply<EmotesReply>(request);
 }
 
 EmotesReply *Api::getChannelEmotes(const QString &id)
 {
-    const QUrl url = api() + QString("/chat/emotes") + QString("?broadcaster_id=") + id;
+    const QUrl url{api() + u"/chat/emotes?broadcaster_id="_qs + id};
     auto request = buildRequest(QUrl(url));
     return createReply<EmotesReply>(request);
 }
 
 EmotesReply *Api::getEmoteSets(const QStringList &ids)
 {
-    const QUrl url = api() + QString("/chat/emotes/set") + QString("?emote_set_id=") + ids.join(repeatDelimeter("emote_set_id"));
+    const QUrl url{api() + u"/chat/emotes/set?emote_set_id="_qs + ids.join(repeatDelimeter(u"emote_set_id"_qs))};
     auto request = buildRequest(QUrl(url));
     return createReply<EmotesReply>(request);
 }
 
 Twitch::GlobalBadgesReply *Twitch::Api::getGlobalBadges()
 {
-    const QUrl url = api() + QString("/chat/badges/global");
+    const QUrl url{api() + u"/chat/badges/global"_qs};
     auto request = buildRequest(QUrl(url));
     return createReply<GlobalBadgesReply>(request);
 }
 
 Twitch::ChannelBadgesReply *Twitch::Api::getChannelBadges(const QString &id)
 {
-    const QUrl url = api() + QString("/chat/badges") + QString("?broadcaster_id=") + id;
+    const QUrl url{api() + u"/chat/badges?broadcaster_id="_qs + id};
     auto request = buildRequest(QUrl(url));
     return createReply<GlobalBadgesReply>(request);
 }

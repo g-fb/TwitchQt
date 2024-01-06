@@ -119,7 +119,7 @@ protected:
     QNetworkRequest buildRequest(QUrl, IncludeID = true, const CacheFlag = CacheFlag::UseNetworkDoNotCache);
     // Repeated parameters format for requests
     // For example in Helix it's ampersand (&) and in v5 it's comma (,)
-    QString repeatDelimeter(const QString & = "", const QChar & = '&') const;
+    QString repeatDelimeter(const QString & = QString(), const QChar & = QLatin1Char('&')) const;
 
     template<class T>
     T *createReply(const QNetworkRequest &, bool = true);

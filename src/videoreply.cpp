@@ -12,11 +12,11 @@
 Twitch::Video videoFromJson(const QJsonObject &video)
 {
     QList<Twitch::MutedSegment> mutedSegmentsList;
-    if (video.find("muted_segments") != video.end()) {
+    if (video.find(u"muted_segments"_qs) != video.end()) {
         const auto &mutedSegments = video[u"muted_segments"_qs].toArray();
         for (const auto &segment : mutedSegments) {
             auto segmentObject = segment.toObject();
-            if (segmentObject.find("duration") == segmentObject.end()) {
+            if (segmentObject.find(u"duration"_qs) == segmentObject.end()) {
                 continue;
             }
             Twitch::MutedSegment ms;
@@ -28,9 +28,9 @@ Twitch::Video videoFromJson(const QJsonObject &video)
 
     QString typeStr = video[u"type"_qs].toString();
     Twitch::Video::VideoType type;
-    if (typeStr == "upload") {
+    if (typeStr == u"upload"_qs) {
         type = Twitch::Video::VideoType::Upload;
-    } else if (typeStr == "archive") {
+    } else if (typeStr == u"archive"_qs) {
         type = Twitch::Video::VideoType::Archive;
     } else {
         type = Twitch::Video::VideoType::Highlight;
@@ -39,9 +39,9 @@ Twitch::Video videoFromJson(const QJsonObject &video)
     QString createdAt = video[u"created_at"_qs].toString();
     QString publishedAt = video[u"published_at"_qs].toString();
 
-    return Twitch::Video{video[u"id"_qs].toString("-1"),
-                         video[u"stream_id"_qs].toString("-1"),
-                         video[u"user_id"_qs].toString("-1"),
+    return Twitch::Video{video[u"id"_qs].toString(u"-1"_qs),
+                         video[u"stream_id"_qs].toString(u"-1"_qs),
+                         video[u"user_id"_qs].toString(u"-1"_qs),
                          video[u"user_login"_qs].toString(),
                          video[u"user_name"_qs].toString(),
                          video[u"title"_qs].toString(),
@@ -62,7 +62,7 @@ namespace Twitch
 {
 void VideoReply::parseData(const QJsonObject &json)
 {
-    if (json.find("data") != json.end()) {
+    if (json.find(u"data"_qs) != json.end()) {
         const auto &data = json[u"data"_qs].toArray();
         if (!data.isEmpty()) {
             m_data.setValue(videoFromJson(data.first().toObject()));
@@ -75,7 +75,7 @@ void VideoReply::parseData(const QJsonObject &json)
 void VideosReply::parseData(const QJsonObject &json)
 {
     Videos videos;
-    if (json.find("data") != json.end()) {
+    if (json.find(u"data"_qs) != json.end()) {
         const auto &data = json[u"data"_qs].toArray();
         for (const auto &video : data) {
             videos.push_back(videoFromJson(video.toObject()));

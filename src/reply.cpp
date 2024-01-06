@@ -25,7 +25,7 @@ Reply::Reply()
     : QObject(nullptr)
     , m_reply(nullptr)
     , m_currentState(ReplyState::Success)
-    , m_cursor("")
+    , m_cursor(QString())
 {
 }
 
@@ -33,7 +33,7 @@ Reply::Reply(QNetworkReply *reply)
     : QObject(reply->manager())
     , m_reply(reply)
     , m_currentState(ReplyState::Pending)
-    , m_cursor("")
+    , m_cursor(QString())
 {
     connect(m_reply, &QNetworkReply::finished, this, &Reply::onFinished, Qt::DirectConnection);
     connect(m_reply, &QNetworkReply::downloadProgress, this, &Reply::downloadProgress, Qt::UniqueConnection);
@@ -99,7 +99,7 @@ void RawReply::onFinished()
             parseData(data);
         }
     }
-    emit finished();
+    Q_EMIT finished();
     m_reply->setParent(nullptr);
     m_reply->deleteLater();
 }
@@ -127,7 +127,7 @@ void JSONReply::onFinished()
         }
     }
 
-    emit finished();
+    Q_EMIT finished();
     m_reply->setParent(nullptr);
     m_reply->deleteLater();
 }
