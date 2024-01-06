@@ -116,11 +116,11 @@ void JSONReply::onFinished()
                 m_currentState = ReplyState::Success;
                 parseData(m_json);
 
-                if (m_json.find("pagination") != m_json.end()) {
-                    auto pagination = m_json["pagination"].toObject();
-                    if (pagination.find("cursor") != pagination.end()) {
+                if (m_json.find(u"pagination"_qs) != m_json.end()) {
+                    auto pagination = m_json[u"pagination"_qs].toObject();
+                    if (pagination.find(u"cursor"_qs) != pagination.end()) {
                         // Save the pagination
-                        m_cursor = pagination["cursor"].toString();
+                        m_cursor = pagination[u"cursor"_qs].toString();
                     }
                 }
             }

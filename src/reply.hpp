@@ -35,7 +35,7 @@ public:
     QVariant &data();
 
     const QString &cursor() const;
-signals:
+Q_SIGNALS:
     void downloadProgress(qint64, qint64);
     void finished();
 

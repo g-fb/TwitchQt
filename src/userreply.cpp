@@ -11,7 +11,7 @@
 
 Twitch::User userFromJson(const QJsonObject &user)
 {
-    QString broadcasterTypeStr = user["broadcaster_type"].toString();
+    QString broadcasterTypeStr = user[u"broadcaster_type"_qs].toString();
     Twitch::User::BroadcasterType broadcasterType = Twitch::User::BroadcasterType::No;
     if (broadcasterTypeStr == "partner") {
         broadcasterType = Twitch::User::BroadcasterType::Partner;
@@ -19,7 +19,7 @@ Twitch::User userFromJson(const QJsonObject &user)
         broadcasterType = Twitch::User::BroadcasterType::Affiliate;
     }
 
-    QString userTypeStr = user["type"].toString();
+    QString userTypeStr = user[u"type"_qs].toString();
     Twitch::User::UserType userType = Twitch::User::UserType::No;
     if (userTypeStr == "global_mod") {
         userType = Twitch::User::UserType::GlobalMod;
@@ -30,15 +30,15 @@ Twitch::User userFromJson(const QJsonObject &user)
     }
 
     return Twitch::User{broadcasterType,
-                        user["description"].toString(),
-                        user["display_name"].toString(),
-                        user["email"].toString(),
-                        user["id"].toString("-1"),
-                        user["login"].toString(),
-                        user["offline_image_url"].toString(),
-                        user["profile_image_url"].toString(),
+                        user[u"description"_qs].toString(),
+                        user[u"display_name"_qs].toString(),
+                        user[u"email"_qs].toString(),
+                        user[u"id"_qs].toString("-1"),
+                        user[u"login"_qs].toString(),
+                        user[u"offline_image_url"_qs].toString(),
+                        user[u"profile_image_url"_qs].toString(),
                         userType,
-                        user["view_count"].toInt(-1)};
+                        user[u"view_count"_qs].toInt(-1)};
 }
 
 namespace Twitch
@@ -46,7 +46,7 @@ namespace Twitch
 void UserReply::parseData(const QJsonObject &json)
 {
     if (json.find("data") != json.end()) {
-        const auto &data = json["data"].toArray();
+        const auto &data = json[u"data"_qs].toArray();
         if (!data.isEmpty()) {
             m_data.setValue(userFromJson(data.first().toObject()));
         }
@@ -57,7 +57,7 @@ void UsersReply::parseData(const QJsonObject &json)
 {
     Users users;
     if (json.find("data") != json.end()) {
-        const auto &data = json["data"].toArray();
+        const auto &data = json[u"data"_qs].toArray();
         for (const auto &user : data) {
             users.push_back(userFromJson(user.toObject()));
         }
@@ -68,17 +68,17 @@ void UsersReply::parseData(const QJsonObject &json)
 void UserFollowsReply::parseData(const QJsonObject &json)
 {
     UserFollows userFollows;
-    userFollows.m_total = json["total"].toInt();
+    userFollows.m_total = json[u"total"_qs].toInt();
     if (json.find("data") != json.end()) {
-        const auto &data = json["data"].toArray();
+        const auto &data = json[u"data"_qs].toArray();
         for (const auto &follow : data) {
             auto followObject = follow.toObject();
             userFollows.m_follows.push_back(Follow{
-                followObject["from_id"].toString(),
-                followObject["from_name"].toString(),
-                followObject["to_id"].toString(),
-                followObject["to_name"].toString(),
-                followObject["followed_at"].toString(),
+                followObject[u"from_id"_qs].toString(),
+                followObject[u"from_name"_qs].toString(),
+                followObject[u"to_id"_qs].toString(),
+                followObject[u"to_name"_qs].toString(),
+                followObject[u"followed_at"_qs].toString(),
             });
         }
     }

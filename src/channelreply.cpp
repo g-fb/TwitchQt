@@ -12,10 +12,10 @@
 Twitch::Channel channelFromJson(const QJsonObject &channel)
 {
     return Twitch::Channel{
-        channel[QStringLiteral("broadcaster_id")].toString(),
-        channel[QStringLiteral("broadcaster_login")].toString(),
-        channel[QStringLiteral("broadcaster_name")].toString(),
-        channel[QStringLiteral("followed_at")].toString(),
+        channel[u"broadcaster_id"_qs].toString(),
+        channel[u"broadcaster_login"_qs].toString(),
+        channel[u"broadcaster_name"_qs].toString(),
+        channel[u"followed_at"_qs].toString(),
     };
 }
 
@@ -23,8 +23,8 @@ namespace Twitch
 {
 void ChannelReply::parseData(const QJsonObject &json)
 {
-    if (json.find("data") != json.end()) {
-        const auto &data = json["data"].toArray();
+    if (json.find(u"data"_qs) != json.end()) {
+        const auto &data = json[u"data"_qs].toArray();
         if (!data.isEmpty()) {
             m_data.setValue(channelFromJson(data.first().toObject()));
         }
@@ -34,8 +34,8 @@ void ChannelReply::parseData(const QJsonObject &json)
 void ChannelsReply::parseData(const QJsonObject &json)
 {
     Channels channels;
-    if (json.find("data") != json.end()) {
-        const auto &data = json["data"].toArray();
+    if (json.find(u"data"_qs) != json.end()) {
+        const auto &data = json[u"data"_qs].toArray();
         for (const auto &user : data) {
             channels.push_back(channelFromJson(user.toObject()));
         }

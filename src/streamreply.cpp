@@ -11,34 +11,34 @@
 
 Twitch::Stream streamFromJson(const QJsonObject &stream)
 {
-    QString typeStr = stream["type"].toString();
+    QString typeStr = stream[u"type"_qs].toString();
     Twitch::Stream::StreamType type = Twitch::Stream::StreamType::No;
     if (typeStr == "live") {
         type = Twitch::Stream::StreamType::Live;
     } else {
         type = Twitch::Stream::StreamType::Vodcast;
     }
-    QString startedAt = stream["started_at"].toString();
+    QString startedAt = stream[u"started_at"_qs].toString();
 
-    return Twitch::Stream{stream["id"].toString("-1"),
-                          stream["user_id"].toString("-1"),
-                          stream["user_name"].toString(),
-                          stream["game_id"].toString("-1"),
-                          stream["community_ids"].toString().split(",").toVector(),
+    return Twitch::Stream{stream[u"id"_qs].toString("-1"),
+                          stream[u"user_id"_qs].toString("-1"),
+                          stream[u"user_name"_qs].toString(),
+                          stream[u"game_id"_qs].toString("-1"),
+                          stream[u"community_ids"_qs].toString().split(",").toVector(),
                           type,
-                          stream["title"].toString(),
-                          stream["viewer_count"].toInt(-1),
+                          stream[u"title"_qs].toString(),
+                          stream[u"viewer_count"_qs].toInt(-1),
                           QDateTime::fromString(startedAt, Qt::ISODate),
-                          stream["language"].toString(),
-                          stream["thumbnail_url"].toString()};
+                          stream[u"language"_qs].toString(),
+                          stream[u"thumbnail_url"_qs].toString()};
 }
 
 namespace Twitch
 {
 void StreamReply::parseData(const QJsonObject &json)
 {
-    if (json.find("data") != json.end()) {
-        const auto &data = json["data"].toArray();
+    if (json.find(u"data"_qs) != json.end()) {
+        const auto &data = json[u"data"_qs].toArray();
         if (!data.isEmpty()) {
             m_data.setValue(streamFromJson(data.first().toObject()));
         } else {
@@ -50,8 +50,8 @@ void StreamReply::parseData(const QJsonObject &json)
 void StreamsReply::parseData(const QJsonObject &json)
 {
     Streams streams;
-    if (json.find("data") != json.end()) {
-        const auto &data = json["data"].toArray();
+    if (json.find(u"data"_qs) != json.end()) {
+        const auto &data = json[u"data"_qs].toArray();
         for (const auto &stream : data) {
             streams.push_back(streamFromJson(stream.toObject()));
 

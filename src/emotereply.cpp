@@ -19,17 +19,17 @@ Twitch::Emotes EmotesReply::emotes()
 void EmotesReply::parseData(const QJsonObject &json)
 {
     Twitch::Emotes emotes;
-    if (json.find("data") != json.end()) {
-        const auto &data = json["data"].toArray();
+    if (json.find(u"data"_qs) != json.end()) {
+        const auto &data = json[u"data"_qs].toArray();
         for (const auto &emote : data) {
             auto emoteObject = emote.toObject();
             Emote e;
-            e.m_id = emoteObject["id"].toString();
-            e.m_name = emoteObject["name"].toString();
-            e.m_images = emoteObject["images"].toObject().toVariantMap();
-            e.m_format = emoteObject["format"].toArray().toVariantList();
-            e.m_scale = emoteObject["scale"].toArray().toVariantList();
-            e.m_themeMode = emoteObject["theme_mode"].toArray().toVariantList();
+            e.m_id = emoteObject[u"id"_qs].toString();
+            e.m_name = emoteObject[u"name"_qs].toString();
+            e.m_images = emoteObject[u"images"_qs].toObject().toVariantMap();
+            e.m_format = emoteObject[u"format"_qs].toArray().toVariantList();
+            e.m_scale = emoteObject[u"scale"_qs].toArray().toVariantList();
+            e.m_themeMode = emoteObject[u"theme_mode"_qs].toArray().toVariantList();
             emotes.insert(e.m_name, e);
         }
     }

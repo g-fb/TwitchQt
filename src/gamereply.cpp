@@ -11,15 +11,15 @@
 
 Twitch::Game gameFromJson(const QJsonObject &game)
 {
-    return Twitch::Game{game["id"].toString(), game["name"].toString(), game["box_art_url"].toString()};
+    return Twitch::Game{game[u"id"_qs].toString(), game[u"name"_qs].toString(), game[u"box_art_url"_qs].toString()};
 }
 
 namespace Twitch
 {
 void GameReply::parseData(const QJsonObject &json)
 {
-    if (json.find("data") != json.end()) {
-        const auto &data = json["data"].toArray();
+    if (json.find(u"data"_qs) != json.end()) {
+        const auto &data = json[u"data"_qs].toArray();
         if (!data.isEmpty()) {
             m_data.setValue(gameFromJson(data.first().toObject()));
         }
@@ -31,8 +31,8 @@ void GameReply::parseData(const QJsonObject &json)
 void GamesReply::parseData(const QJsonObject &json)
 {
     Games games;
-    if (json.find("data") != json.end()) {
-        const auto &data = json["data"].toArray();
+    if (json.find(u"data"_qs) != json.end()) {
+        const auto &data = json[u"data"_qs].toArray();
         for (const auto &game : data) {
             games.push_back(gameFromJson(game.toObject()));
         }
