@@ -1,0 +1,20 @@
+#
+# SPDX-FileCopyrightText: 2024 George Florea Bănuș <georgefb899@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+#
+
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+if(NOT @BUILD_SHARED_LIBS@)
+    find_dependency(Qt6Core)
+    find_dependency(Qt6Gui)
+    find_dependency(Qt6Network)
+endif()
+
+list(PREPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
+
+include("${CMAKE_CURRENT_LIST_DIR}/TwitchQtTargets.cmake")
+@PACKAGE_INCLUDE_QCHTARGETS@

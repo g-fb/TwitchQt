@@ -6,36 +6,54 @@
 
 cmake_minimum_required(VERSION 3.16)
 
-project(TwitchQt LANGUAGES CXX)
+project(TwitchQt VERSION 1.0.0 LANGUAGES CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(QT_MIN_VERSION 6.0.0)
+set(KF6_MIN_VERSION 6.0.0)
 
-find_package(ECM 5.112 REQUIRED NO_MODULE)
-set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+find_package(ECM ${KF6_MIN_VERSION} REQUIRED NO_MODULE)
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 include(FeatureSummary)
-include(GenerateExportHeader)
-include(KDEInstallDirs)
-include(ECMGenerateHeaders)
-include(KDEGitCommitHooks)
-include(KDEClangFormat)
+find_package(Qt6Core ${QT_MIN_VERSION})
+set_package_properties(Qt6Core PROPERTIES TYPE REQUIRED)
 
-file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h *.hpp *.c)
-kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
-kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
+find_package(Qt6Gui ${QT_MIN_VERSION})
+set_package_properties(Qt6Gui PROPERTIES TYPE REQUIRED)
 
-find_package(Qt6 COMPONENTS
-    Core
-    Gui
-    Network
-)
-set_package_properties(Qt${QT_VERSION_MAJOR}Core PROPERTIES TYPE REQUIRED)
-set_package_properties(Qt${QT_VERSION_MAJOR}Gui PROPERTIES TYPE REQUIRED)
-set_package_properties(Qt{QT_VERSION_MAJOR}Network PROPERTIES TYPE REQUIRED)
+find_package(Qt6Network ${QT_MIN_VERSION})
+set_package_properties(Qt6Network PROPERTIES TYPE REQUIRED)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
+
+include(KDEInstallDirs)
+include(KDECMakeSettings NO_POLICY_SCOPE)
+include(KDECompilerSettings NO_POLICY_SCOPE)
+include(ECMGenerateHeaders)
+include(ECMGenerateExportHeader)
+
+include(KDEClangFormat)
+file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h *.hpp *.c)
+kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
+
+include(KDEGitCommitHooks)
+kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
+
+include(ECMSetupVersion)
+ecm_setup_version(PROJECT
+    VARIABLE_PREFIX TWITCHQT
+    VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/src/twitchqt_version.h"
+    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/TwitchQtConfigVersion.cmake"
+    SOVERSION 1
+)
+
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/TwitchQt")
+
+include(CMakePackageConfigHelpers)
+configure_package_config_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/TwitchQtConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/TwitchQtConfig.cmake"
+    INSTALL_DESTINATION ${CMAKECONFIG_INSTALL_DIR}
+)
 
 add_subdirectory(src)

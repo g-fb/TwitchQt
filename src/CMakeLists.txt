@@ -7,6 +7,13 @@
 add_library(TwitchQt)
 add_library(TwitchQt::TwitchQt ALIAS TwitchQt)
 
+set_target_properties(TwitchQt
+    PROPERTIES
+        VERSION     ${TWITCHQT_VERSION}
+        SOVERSION   ${TWITCHQT_SOVERSION}
+        EXPORT_NAME TwitchQt
+)
+
 target_sources(TwitchQt
     PRIVATE
         channelreply.hpp channelreply.cpp
@@ -21,12 +28,15 @@ target_sources(TwitchQt
         videoreply.hpp videoreply.cpp
 )
 
-generate_export_header(TwitchQt)
+ecm_generate_export_header(TwitchQt
+    BASE_NAME TwitchQt
+    VERSION 1.0.0
+    USE_VERSION_HEADER
+)
 
 target_include_directories(TwitchQt
     INTERFACE
-        $<BUILD_INTERFACE:${TwitchQt_SOURCE_DIR}/src>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/src>)
+        INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}/TwitchQt>")
 
 target_link_libraries(TwitchQt
     PRIVATE
@@ -42,12 +52,23 @@ ecm_generate_headers(TwitchQt_HEADERS
     REQUIRED_HEADERS TwitchQt_HEADERS
 )
 
-install(TARGETS TwitchQt ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
-
-install(
-    FILES
-        ${CMAKE_CURRENT_BINARY_DIR}/twitchqt_export.h
-        ${TwitchQt_HEADERS}
-    DESTINATION
-        ${KDE_INSTALL_LIBDIR}/TwitchQt COMPONENT Devel
+install(TARGETS TwitchQt EXPORT TwitchQtTargets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/twitchqt_export.h
+    ${CMAKE_CURRENT_BINARY_DIR}/twitchqt_version.h
+    ${TwitchQt_HEADERS}
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR}/TwitchQt COMPONENT Devel
 )
+
+install(FILES
+    "${PROJECT_BINARY_DIR}/TwitchQtConfig.cmake"
+    "${PROJECT_BINARY_DIR}/TwitchQtConfigVersion.cmake"
+    DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+    COMPONENT Devel
+)
+
+install(EXPORT   TwitchQtTargets
+    DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+    FILE         TwitchQtTargets.cmake NAMESPACE TwitchQt::
+)
+
