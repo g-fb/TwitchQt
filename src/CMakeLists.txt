@@ -16,15 +16,20 @@ set_target_properties(TwitchQt
 
 target_sources(TwitchQt
     PRIVATE
-        channelreply.hpp channelreply.cpp
+        badge.hpp
         badgereply.hpp badgereply.cpp
+        channelreply.hpp channelreply.cpp
+        emote.hpp
         emotereply.hpp emotereply.cpp
-        game.hpp game.hpp
+        game.hpp
         gamereply.hpp gamereply.cpp
         reply.hpp reply.cpp
+        stream.hpp
         streamreply.hpp streamreply.cpp
         twitchqt.hpp twitchqt.cpp
+        user.hpp
         userreply.hpp userreply.cpp
+        video.hpp
         videoreply.hpp videoreply.cpp
 )
 
