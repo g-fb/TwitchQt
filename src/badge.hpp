@@ -20,9 +20,9 @@ struct Badge {
         QString m_title;
     };
     QString m_setId;
-    QVector<Version> m_versions;
+    QList<Version> m_versions;
 };
-using Badges = QVector<Badge>;
+using Badges = QList<Badge>;
 }
 
 Q_DECLARE_METATYPE(Twitch::Badge);

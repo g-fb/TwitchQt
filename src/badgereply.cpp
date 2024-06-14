@@ -17,7 +17,7 @@ void GlobalBadgesReply::parseData(const QJsonObject &json)
     if (json.find(u"data"_qs) != json.end()) {
         const auto &data = json[u"data"_qs].toArray();
         for (const auto &badge : data) {
-            QVector<Badge::Version> versions;
+            QList<Badge::Version> versions;
             const auto &badgeVersions = badge.toObject()[u"versions"_qs].toArray();
             for (const auto &versionObject : badgeVersions) {
                 const auto &version = versionObject.toObject();

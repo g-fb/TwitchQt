@@ -10,7 +10,7 @@
 #include <QDateTime>
 #include <QObject>
 #include <QString>
-#include <QVector>
+#include <QList>
 
 namespace Twitch
 {
@@ -21,7 +21,7 @@ struct Stream {
     QString m_userId;
     QString m_userName;
     QString m_gameId;
-    QVector<QString> m_communityIds;
+    QList<QString> m_communityIds;
     StreamType m_type;
     QString m_title;
     int m_viewerCount;
@@ -30,7 +30,7 @@ struct Stream {
     QString m_thumbnailUrl;
 };
 
-using Streams = QVector<Twitch::Stream>;
+using Streams = QList<Twitch::Stream>;
 }
 
 Q_DECLARE_METATYPE(Twitch::Stream);

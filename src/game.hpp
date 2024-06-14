@@ -9,7 +9,7 @@
 
 #include <QObject>
 #include <QString>
-#include <QVector>
+#include <QList>
 
 namespace Twitch
 {
@@ -19,7 +19,7 @@ struct Game {
     QString m_boxArtUrl;
 };
 
-using Games = QVector<Twitch::Game>;
+using Games = QList<Twitch::Game>;
 }
 
 Q_DECLARE_METATYPE(Twitch::Game);

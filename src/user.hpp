@@ -38,10 +38,10 @@ struct Follow {
 
 struct UserFollows {
     int m_total;
-    QVector<Twitch::Follow> m_follows;
+    QList<Twitch::Follow> m_follows;
 };
 
-using Users = QVector<User>;
+using Users = QList<User>;
 }
 
 Q_DECLARE_METATYPE(Twitch::User);

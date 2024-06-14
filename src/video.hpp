@@ -10,7 +10,7 @@
 #include <QDateTime>
 #include <QObject>
 #include <QString>
-#include <QVector>
+#include <QList>
 
 namespace Twitch
 {
@@ -42,7 +42,7 @@ struct Video {
     QList<MutedSegment> m_mutedSegments;
 };
 
-using Videos = QVector<Twitch::Video>;
+using Videos = QList<Twitch::Video>;
 }
 
 Q_DECLARE_METATYPE(Twitch::MutedSegment);

@@ -21,7 +21,7 @@ struct Channel {
     QString broadcasterName;
     QString followedAt;
 };
-using Channels = QVector<Channel>;
+using Channels = QList<Channel>;
 
 class TWITCHQT_EXPORT ChannelReply : public JSONReply
 {
