@@ -61,6 +61,21 @@ install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/twitchqt_export.h
     ${CMAKE_CURRENT_BINARY_DIR}/twitchqt_version.h
     ${TwitchQt_HEADERS}
+    badge.hpp
+    badgereply.hpp
+    channelreply.hpp
+    emote.hpp
+    emotereply.hpp
+    game.hpp
+    gamereply.hpp
+    reply.hpp
+    stream.hpp
+    streamreply.hpp
+    twitchqt.hpp
+    user.hpp
+    userreply.hpp
+    video.hpp
+    videoreply.hpp
     DESTINATION ${KDE_INSTALL_INCLUDEDIR}/TwitchQt COMPONENT Devel
 )
 
