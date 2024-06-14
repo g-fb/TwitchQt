@@ -44,8 +44,8 @@ struct UserFollows {
 using Users = QList<User>;
 }
 
-Q_DECLARE_METATYPE(Twitch::User);
-Q_DECLARE_METATYPE(Twitch::Users);
-Q_DECLARE_METATYPE(Twitch::UserFollows);
+Q_DECLARE_METATYPE(Twitch::User)
+Q_DECLARE_METATYPE(Twitch::Users)
+Q_DECLARE_METATYPE(Twitch::UserFollows)
 
 #endif // TWITCHUSER_HPP

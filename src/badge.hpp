@@ -25,6 +25,6 @@ struct Badge {
 using Badges = QList<Badge>;
 }
 
-Q_DECLARE_METATYPE(Twitch::Badge);
+Q_DECLARE_METATYPE(Twitch::Badge)
 
 #endif // TWITCHBADGE_HPP

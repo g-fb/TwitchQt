@@ -22,7 +22,7 @@ struct Game {
 using Games = QList<Twitch::Game>;
 }
 
-Q_DECLARE_METATYPE(Twitch::Game);
-Q_DECLARE_METATYPE(Twitch::Games);
+Q_DECLARE_METATYPE(Twitch::Game)
+Q_DECLARE_METATYPE(Twitch::Games)
 
 #endif // TWITCHGAME_HPP

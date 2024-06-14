@@ -45,8 +45,8 @@ struct Video {
 using Videos = QList<Twitch::Video>;
 }
 
-Q_DECLARE_METATYPE(Twitch::MutedSegment);
-Q_DECLARE_METATYPE(Twitch::Video);
-Q_DECLARE_METATYPE(Twitch::Videos);
+Q_DECLARE_METATYPE(Twitch::MutedSegment)
+Q_DECLARE_METATYPE(Twitch::Video)
+Q_DECLARE_METATYPE(Twitch::Videos)
 
 #endif // TWITCHVIDEO_HPP

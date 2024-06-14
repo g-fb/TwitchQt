@@ -27,7 +27,7 @@ struct Emote {
 using Emotes = QMap<QString, Emote>;
 }
 
-Q_DECLARE_METATYPE(Twitch::Emote);
-Q_DECLARE_METATYPE(Twitch::Emotes);
+Q_DECLARE_METATYPE(Twitch::Emote)
+Q_DECLARE_METATYPE(Twitch::Emotes)
 
 #endif // TWITCHEMOTE_HPP
