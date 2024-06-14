@@ -40,8 +40,7 @@ ecm_generate_export_header(TwitchQt
 )
 
 target_include_directories(TwitchQt
-    INTERFACE
-        INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}/TwitchQt>")
+    INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}/TwitchQt>")
 
 target_link_libraries(TwitchQt
     PRIVATE
