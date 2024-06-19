@@ -21,13 +21,15 @@ struct Stream {
     QString m_userId;
     QString m_userName;
     QString m_gameId;
+    QString m_gameName;
     QList<QString> m_communityIds;
     StreamType m_type;
     QString m_title;
-    int m_viewerCount;
+    int m_viewerCount{-1};
     QDateTime m_startedAt;
     QString m_language;
     QString m_thumbnailUrl;
+    bool m_isMature{false};
 };
 
 using Streams = QList<Twitch::Stream>;

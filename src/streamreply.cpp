@@ -24,13 +24,15 @@ Twitch::Stream streamFromJson(const QJsonObject &stream)
                           stream[u"user_id"_qs].toString(u"-1"_qs),
                           stream[u"user_name"_qs].toString(),
                           stream[u"game_id"_qs].toString(u"-1"_qs),
-                          stream[u"community_ids"_qs].toString().split(u","_qs).toVector(),
+                          stream[u"game_name"_qs].toString(),
+                          stream[u"community_ids"_qs].toString().split(u","_qs).toList(),
                           type,
                           stream[u"title"_qs].toString(),
                           stream[u"viewer_count"_qs].toInt(-1),
                           QDateTime::fromString(startedAt, Qt::ISODate),
                           stream[u"language"_qs].toString(),
-                          stream[u"thumbnail_url"_qs].toString()};
+                          stream[u"thumbnail_url"_qs].toString(),
+                          stream[u"is_mature"_qs].toBool(false)};
 }
 
 namespace Twitch
