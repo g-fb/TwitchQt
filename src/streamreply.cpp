@@ -22,6 +22,7 @@ Twitch::Stream streamFromJson(const QJsonObject &stream)
 
     return Twitch::Stream{stream[u"id"_qs].toString(u"-1"_qs),
                           stream[u"user_id"_qs].toString(u"-1"_qs),
+                          stream[u"user_login"_qs].toString(),
                           stream[u"user_name"_qs].toString(),
                           stream[u"game_id"_qs].toString(u"-1"_qs),
                           stream[u"game_name"_qs].toString(),

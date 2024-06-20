@@ -19,6 +19,7 @@ struct Stream {
     enum class StreamType { No, Live, Vodcast };
     QString m_id;
     QString m_userId;
+    QString m_userLogin;
     QString m_userName;
     QString m_gameId;
     QString m_gameName;
